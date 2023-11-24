@@ -21,15 +21,10 @@ void Engine::updateLoop()
 {
 	while (Engine::RUNNING)
 	{
-		system("cls");  // Clear the screen once before rendering objects
-		cout << "Update loop iteration" << endl;
-		cout << Engine::RUNNING;
 		std::lock_guard<std::mutex> lock(screenMutex);
 		Game::update();
 		Engine::printScreen();
 		this_thread::sleep_for(chrono::milliseconds(30));
-
-		// Debug output
 	}
 	onStop();
 }
@@ -42,18 +37,15 @@ void Engine::onStop()
 {
 	system("cls");
 	cout << "Engine stopped." << endl;
-	cout << Engine::RUNNING;
 	Input::Cleanup();
 }
 
 void Engine::printScreen()
 {
-	cout << "Started printing";
+	system("cls"); // Clear the screen once before rendering objects
 	std::size_t vectorLength = Object::objects.size();
-	for (unsigned int i = 0; i < vectorLength; i++)
+	for (std::size_t i = 0; i < vectorLength; ++i)
 	{
-		cout << "Started printing";
-
 		Object::objects[i].get().render(csbi);
 	}
 }

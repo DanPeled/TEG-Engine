@@ -23,7 +23,7 @@ namespace TEG
 		GameObject();
 		~GameObject();
 
-		static GameObject instantiate(Vector2 pos, int width, int height, char symbol);
+		static GameObject* instantiate(Vector2 pos, int width, int height, char symbol);
 
 		inline Vector2 getPos() const
 		{

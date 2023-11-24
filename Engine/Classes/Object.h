@@ -7,10 +7,14 @@
 #include <windows.h>
 #include <functional>
 #include "Vector2.h"
+#include <memory>
+#include <functional>
+#include <string>
+#include <iostream>
 
 namespace TEG
 {
-	class Object
+	class Object : public std::enable_shared_from_this<Object>
 	{
 		Vector2 position;
 
@@ -26,6 +30,6 @@ namespace TEG
 		{
 			return position;
 		}
-		static std::vector<std::reference_wrapper<Object>> objects;
+		static std::vector<std::reference_wrapper<TEG::Object>> objects;
 	};
 }

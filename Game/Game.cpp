@@ -4,8 +4,8 @@
 using namespace TEG;
 using namespace std;
 Vector2 startingPosition(12, 4);
-GameObject myGameObject;
-UI::Text myGameObject2;
+GameObject *myGameObject;
+UI::Text *myGameObject2;
 void Game::start()
 {
 	myGameObject = GameObject::instantiate(startingPosition, 5, 3, '#');
@@ -35,20 +35,19 @@ void Game::update()
 		if (event.type == InputEventType::KeyClicked)
 		{
 			char pressedKey = std::get<char>(event.data);
-			cout << "KeyClicked! Key: " << pressedKey << std::endl;
 			switch ((char)toupper(pressedKey))
 			{
 			case 'W':
-				myGameObject.setPos(myGameObject.getPos() + Vector2(0, -2));
+				myGameObject->setPos(myGameObject->getPos() + Vector2(0, -2));
 				break;
 			case 'A':
-				myGameObject.setPos(myGameObject.getPos() + Vector2(-2, 0));
+				myGameObject->setPos(myGameObject->getPos() + Vector2(-2, 0));
 				break;
 			case 'S':
-				myGameObject.setPos(myGameObject.getPos() + Vector2(0, 2));
+				myGameObject->setPos(myGameObject->getPos() + Vector2(0, 2));
 				break;
 			case 'D':
-				myGameObject.setPos(myGameObject.getPos() + Vector2(2, 0));
+				myGameObject->setPos(myGameObject->getPos() + Vector2(2, 0));
 				break;
 			case 'Q':
 				Engine::stop();

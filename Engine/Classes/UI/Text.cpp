@@ -29,17 +29,14 @@ UI::Text::Text()
 	: Object(Vector2(0, 0)), position(Vector2(0, 0)), text(""), color(Color::WHITE)
 {
 }
-UI::Text UI::Text::instantiate(Vector2 pos, std::string text, std::string color)
+UI::Text *UI::Text::instantiate(Vector2 pos, std::string text, std::string color)
 {
-	std::unique_ptr<UI::Text> obj = std::make_unique<UI::Text>(pos, text, color);
-
-	// Store a reference to the object in the vector
-	Object::objects.push_back(std::ref(*obj));
-
-	// Move ownership to the caller
-	return *obj.release();
+	UI::Text *obj = new UI::Text(pos, text, color);
+	Object::objects.push_back(*obj);
+	return obj;
 }
-UI::Text UI::Text::instantiate(Vector2 pos, std::string text)
+
+UI::Text *UI::Text::instantiate(Vector2 pos, std::string text)
 {
 	return instantiate(pos, text, Color::WHITE);
 }
