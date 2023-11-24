@@ -5,6 +5,12 @@
 
 **TEG engine is currently only *Windows* supported**
 In order to make the project into an executable, run the compile.bat file, here's the cmd command:
-`compile.bat` or `.\compile.bat`
+```bash
+compile.bat
+```
+or 
+```bash
+.\compile.bat
+```
 
 ---
