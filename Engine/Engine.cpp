@@ -1,8 +1,4 @@
 #include "Engine.h"
-#include <iostream>
-#include <vector>
-#include <thread>
-#include <chrono>
 
 using namespace TEG;
 using namespace std;
@@ -24,7 +20,6 @@ void Engine::updateLoop()
 {
 	Vector2 startingPosition(0, 1);
 	GameObject myGameObject = GameObject::instantiate(startingPosition, 3, 1, '#');
-
 	while (Engine::RUNNING)
 	{
 		std::lock_guard<std::mutex> lock(screenMutex);
@@ -61,7 +56,7 @@ void Engine::updateLoop()
 			}
 		}
 
-		Engine::printScreen(myGameObject);
+		Engine::printScreen();
 
 		this_thread::sleep_for(chrono::milliseconds(0));
 	}
@@ -74,41 +69,13 @@ void Engine::stop()
 	Input::Cleanup();
 }
 
-void Engine::printScreen(const GameObject &obj)
+void Engine::printScreen()
 {
-	// Retrieve object properties
-	Vector2 startPos = obj.getPos();
-	int width = obj.getWidth();
-	int height = obj.getHeight();
-	char symbol = obj.getSymbol();
-
-	// Create a HANDLE to the console output buffer
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	// Clear the console screen buffer
-	COORD topLeft = {0, 0};
-	DWORD dwCharsWritten;
-	FillConsoleOutputCharacter(hConsole, ' ', csbi.dwSize.X * csbi.dwSize.Y, topLeft, &dwCharsWritten);
-
-	// Create a CHAR_INFO buffer
-	std::vector<CHAR_INFO> charBuffer(width * height);
-
-	// Initialize each element of the CHAR_INFO vector
-	for (int i = 0; i < width * height; ++i)
+	std::size_t vectorLength = Object::objects.size();
+	for (unsigned int i = 0; i < vectorLength; i++)
 	{
-		charBuffer[i].Char.UnicodeChar = symbol;
-		charBuffer[i].Attributes = FOREGROUND_INTENSITY;
+		Object::objects[i].get().render(csbi);
 	}
-
-	// Set up the rectangle to be updated
-	SMALL_RECT rect;
-	rect.Top = static_cast<SHORT>(startPos.y);
-	rect.Left = static_cast<SHORT>(startPos.x);
-	rect.Bottom = static_cast<SHORT>(startPos.y + height - 1);
-	rect.Right = static_cast<SHORT>(startPos.x + width - 1);
-
-	// Update the screen buffer with the GameObject
-	WriteConsoleOutput(hConsole, charBuffer.data(), {static_cast<SHORT>(width), static_cast<SHORT>(height)}, {0, 0}, &rect);
 }
 
 std::string Engine::screen = "";

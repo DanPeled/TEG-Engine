@@ -4,6 +4,11 @@
 #include "Classes/GameObject.h"
 #include <mutex>
 #include "Classes/Input.h"
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <chrono>
+
 namespace TEG
 {
 	class Engine
@@ -12,7 +17,7 @@ namespace TEG
 		static void init();
 		static void updateLoop();
 		static void stop();
-		static void printScreen(const GameObject &obj);
+		static void printScreen();
 
 	private:
 		static std::string screen;

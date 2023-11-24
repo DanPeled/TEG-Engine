@@ -1,7 +1,17 @@
+#pragma once
+
 #include "Vector2.h"
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <chrono>
+#include <mutex>
+#include <windows.h>
+#include <functional>
+#include "Object.h"
 namespace TEG
 {
-	class GameObject
+	class GameObject : public Object
 	{
 		Vector2 position;
 		int width;
@@ -34,9 +44,12 @@ namespace TEG
 			return height;
 		}
 
-		inline char getSymbol() const
+		virtual inline char getSymbol() const
 		{
 			return symbol;
 		}
+
+		virtual void render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
+
 	};
 }
