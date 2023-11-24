@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "../Util/colors.h"
 using namespace TEG;
 GameObject::GameObject(Vector2 position_, int width_, int height_, char symbol_)
     : Object(position_), position(position_), width(width_), height(height_), symbol(symbol_)
@@ -35,7 +35,7 @@ void GameObject::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
     for (int i = 0; i < width * height; ++i)
     {
         charBuffer[i].Char.UnicodeChar = symbol;
-        charBuffer[i].Attributes = FOREGROUND_INTENSITY;
+        charBuffer[i].Attributes = FOREGROUND_BLUE;
     }
 
     // Set up the rectangle to be updated

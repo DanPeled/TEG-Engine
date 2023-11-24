@@ -50,6 +50,5 @@ namespace TEG
 		}
 
 		virtual void render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
-
 	};
 }
