@@ -18,7 +18,10 @@ namespace TEG
 		Object(Vector2 position_) : position(position_) {}
 
 		virtual void render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const = 0;
-
+		inline void setPos(Vector2 newPos)
+		{
+			position = newPos;
+		}
 		static std::vector<std::reference_wrapper<Object>> objects;
 	};
 }

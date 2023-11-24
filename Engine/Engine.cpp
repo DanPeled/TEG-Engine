@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+#include "Classes/UI/UI.h"
 using namespace TEG;
 using namespace std;
 
@@ -12,14 +12,15 @@ void Engine::init()
 	int consoleHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
 	screen = string(consoleWidth * consoleHeight, ' ');
-
+	system("cls");
 	cout << "Engine initialized." << endl;
 }
 
 void Engine::updateLoop()
 {
-	Vector2 startingPosition(0, 1);
-	GameObject myGameObject = GameObject::instantiate(startingPosition, 3, 1, '#');
+	Vector2 startingPosition(12, 4);
+	GameObject myGameObject = GameObject::instantiate(startingPosition, 5, 3, '#');
+	Text myGameObject2 = Text::instantiate(Vector2(12, 8), "Joe");
 	while (Engine::RUNNING)
 	{
 		std::lock_guard<std::mutex> lock(screenMutex);

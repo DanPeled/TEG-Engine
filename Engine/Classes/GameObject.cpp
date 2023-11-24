@@ -13,7 +13,7 @@ GameObject::~GameObject()
 GameObject GameObject::instantiate(Vector2 pos, int width, int height, char symbol)
 {
     GameObject obj = GameObject(pos, width, height, symbol);
-    objects.push_back(std::ref(obj));
+    Object::objects.push_back(std::ref(obj));
     return obj;
 }
 
@@ -28,12 +28,7 @@ void GameObject::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
     // Create a HANDLE to the console output buffer
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // Clear the console screen buffer
-    COORD topLeft = {0, 0};
-    DWORD dwCharsWritten;
-    FillConsoleOutputCharacter(hConsole, ' ', csbi.dwSize.X * csbi.dwSize.Y, topLeft, &dwCharsWritten);
-
-    // Create a CHAR_INFO buffer
+    // Create a CHAR_INFO buffer for the GameObject
     std::vector<CHAR_INFO> charBuffer(width * height);
 
     // Initialize each element of the CHAR_INFO vector
@@ -53,4 +48,5 @@ void GameObject::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
     // Update the screen buffer with the GameObject
     WriteConsoleOutput(hConsole, charBuffer.data(), {static_cast<SHORT>(width), static_cast<SHORT>(height)}, {0, 0}, &rect);
 }
+
 std::vector<std::reference_wrapper<TEG::Object>> TEG::Object::objects;
