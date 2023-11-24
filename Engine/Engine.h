@@ -8,7 +8,7 @@
 #include <vector>
 #include <thread>
 #include <chrono>
-
+#include "Classes/UI/UI.h"
 namespace TEG
 {
 	class Engine
@@ -16,10 +16,11 @@ namespace TEG
 	public:
 		static void init();
 		static void updateLoop();
-		static void stop();
 		static void printScreen();
+		static void stop();
 
 	private:
+		static void onStop();
 		static std::string screen;
 		static bool RUNNING;
 		static CONSOLE_SCREEN_BUFFER_INFO csbi;

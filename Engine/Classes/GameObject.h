@@ -20,6 +20,7 @@ namespace TEG
 
 	public:
 		GameObject(Vector2 position_, int width_, int height_, char symbol_);
+		GameObject();
 		~GameObject();
 
 		static GameObject instantiate(Vector2 pos, int width, int height, char symbol);

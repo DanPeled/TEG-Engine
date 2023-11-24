@@ -31,46 +31,43 @@ UI::Text::Text()
 }
 UI::Text UI::Text::instantiate(Vector2 pos, std::string text, std::string color)
 {
-	UI::Text obj = Text(pos, text);
-	Object::objects.push_back(std::ref(obj));
-	return obj;
+	std::unique_ptr<UI::Text> obj = std::make_unique<UI::Text>(pos, text, color);
+
+	// Store a reference to the object in the vector
+	Object::objects.push_back(std::ref(*obj));
+
+	// Move ownership to the caller
+	return *obj.release();
 }
 UI::Text UI::Text::instantiate(Vector2 pos, std::string text)
 {
 	return instantiate(pos, text, Color::WHITE);
 }
+
 void UI::Text::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
-	std::string finalText = this->text;
 	// Retrieve object properties
 	Vector2 startPos = this->getPos();
 
 	// Create a HANDLE to the console output buffer
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	// Convert UTF-8 string to wide character string
-	int wideCharCount = MultiByteToWideChar(CP_UTF8, 0, finalText.c_str(), -1, nullptr, 0);
-	std::vector<WCHAR> wideText(wideCharCount);
-	MultiByteToWideChar(CP_UTF8, 0, finalText.c_str(), -1, wideText.data(), wideCharCount);
-
 	// Set the cursor position
 	COORD cursorPos = {static_cast<SHORT>(startPos.x), static_cast<SHORT>(startPos.y)};
 	SetConsoleCursorPosition(hConsole, cursorPos);
 
-	// Set up the console attributes for intensity without clearing the background
-	SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
-
-	// Write each character to the console
-	for (WCHAR wideChar : wideText)
+	// Write the UTF-8 text to the console
+	DWORD charsWritten;
+	if (!WriteConsoleOutputCharacterA(hConsole, text.c_str(), static_cast<DWORD>(text.size()), cursorPos, &charsWritten))
 	{
-		DWORD charsWritten;
-		if (!WriteConsoleOutputCharacterW(hConsole, &wideChar, 1, cursorPos, &charsWritten))
-		{
-			DWORD error = GetLastError();
-			std::cerr << "Error writing to console. Error code: " << error << std::endl;
-		}
+		DWORD error = GetLastError();
+		std::cerr << "Error writing to console. Error code: " << error << std::endl;
 
-		// Move the cursor to the next position
-		cursorPos.X++;
+		// Print more details about the error
+		std::cerr << "CursorPos: (" << cursorPos.X << ", " << cursorPos.Y << ")" << std::endl;
+		std::cerr << "Text: " << text << std::endl;
+
+		// Exit the function or handle the error as needed
+		return;
 	}
 }

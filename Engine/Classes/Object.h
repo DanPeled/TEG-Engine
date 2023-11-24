@@ -22,6 +22,10 @@ namespace TEG
 		{
 			position = newPos;
 		}
+		inline Vector2 getPos()
+		{
+			return position;
+		}
 		static std::vector<std::reference_wrapper<Object>> objects;
 	};
 }
