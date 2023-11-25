@@ -43,6 +43,7 @@ public:
     static void Initialize();
     static void Cleanup();
     static std::vector<InputEvent> GetInputEvents();
+    static void SimulateKeyPress(char key);
 
 private:
     static void ErrorExit(LPCSTR lpszMessage);

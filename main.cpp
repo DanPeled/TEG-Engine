@@ -5,8 +5,8 @@ using namespace TEG;
 
 int main()
 {
-	Engine::init();
-	std::thread updateThread(&Engine::updateLoop);
+	Engine::Init();
+	std::thread updateThread(&Engine::UpdateLoop);
 	updateThread.join();
 	return 0;
 }

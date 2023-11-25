@@ -41,7 +41,7 @@ UI::Text *UI::Text::instantiate(Vector2 pos, std::string text)
 	return instantiate(pos, text, Color::WHITE);
 }
 
-void UI::Text::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
+void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
 	// Retrieve object properties
 	Vector2 startPos = this->getPos();

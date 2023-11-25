@@ -1,52 +1,49 @@
-#include "Engine.h"
-#include "Classes/UI/UI.h"
+#include <iostream>
+#include <thread>
+#include <chrono>
 #include "../Game/Game.h"
+#include "Engine.h"
+
 using namespace TEG;
 using namespace std;
 
-void Engine::init()
+void Engine::Init()
 {
 	Input::Initialize();
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-
-	int consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	int consoleHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-	screen = string(consoleWidth * consoleHeight, ' ');
-	system("cls");
 	cout << "Engine initialized." << endl;
-	Game::start();
+	Game::Start();
 }
 
-void Engine::updateLoop()
+void Engine::UpdateLoop()
 {
 	while (Engine::RUNNING)
 	{
-		std::lock_guard<std::mutex> lock(screenMutex);
-		Game::update();
-		Engine::printScreen();
+		Engine::PrintScreen();
+		Game::Update();
 		this_thread::sleep_for(chrono::milliseconds(30));
 	}
-	onStop();
+	OnStop();
 }
 
-void Engine::stop()
+void Engine::Stop()
 {
 	Engine::RUNNING = false;
 }
-void Engine::onStop()
+
+void Engine::OnStop()
 {
 	system("cls");
 	cout << "Engine stopped." << endl;
 	Input::Cleanup();
 }
 
-void Engine::printScreen()
+void Engine::PrintScreen()
 {
-	system("cls"); // Clear the screen once before rendering objects
+	system("cls");
 	std::size_t vectorLength = Object::objects.size();
 	for (std::size_t i = 0; i < vectorLength; ++i)
 	{
-		Object::objects[i].get().render(csbi);
+		Object::objects[i].get().Render(csbi);
 	}
 }
 

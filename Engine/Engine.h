@@ -14,13 +14,13 @@ namespace TEG
 	class Engine
 	{
 	public:
-		static void init();
-		static void updateLoop();
-		static void printScreen();
-		static void stop();
+		static void Init();
+		static void UpdateLoop();
+		static void PrintScreen();
+		static void Stop();
 
 	private:
-		static void onStop();
+		static void OnStop();
 		static std::string screen;
 		static bool RUNNING;
 		static CONSOLE_SCREEN_BUFFER_INFO csbi;

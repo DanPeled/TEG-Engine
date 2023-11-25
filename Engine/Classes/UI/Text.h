@@ -22,7 +22,7 @@ namespace TEG
 			{
 				return position;
 			}
-			void render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
+			void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
 			static Text *instantiate(Vector2 pos, std::string text);
 			static Text *instantiate(Vector2 pos, std::string text, std::string color);
 			inline void setPos(Vector2 newPos)

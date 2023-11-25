@@ -27,7 +27,7 @@ GameObject* GameObject::instantiate(Vector2 pos, int width, int height, char sym
     return obj;
 }
 
-void GameObject::render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
+void GameObject::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
     // Ensure 'this' is in the objects vector
     // auto it = std::find_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)

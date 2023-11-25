@@ -46,25 +46,25 @@ std::vector<InputEvent> Input::GetInputEvents()
 				}
 				break;
 
-			// case MOUSE_EVENT:
-			// {
-			// 	MOUSE_EVENT_RECORD mouseEvent = irInBuf[i].Event.MouseEvent;
-			// 	events.push_back({InputEventType::MouseMoved, mouseEvent.dwMousePosition.X, mouseEvent.dwMousePosition.Y});
+				// case MOUSE_EVENT:
+				// {
+				// 	MOUSE_EVENT_RECORD mouseEvent = irInBuf[i].Event.MouseEvent;
+				// 	events.push_back({InputEventType::MouseMoved, mouseEvent.dwMousePosition.X, mouseEvent.dwMousePosition.Y});
 
-			// 	if (mouseEvent.dwEventFlags == MOUSE_MOVED)
-			// 	{
-			// 		// Handle mouse move event
-			// 	}
-			// 	else if (mouseEvent.dwEventFlags == 0)
-			// 	{
-			// 		// Handle mouse button press/release events
-			// 		if (mouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED)
-			// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Left});
-			// 		else if (mouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED)
-			// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Right});
-			// 	}
-			// 	break;
-			// }
+				// 	if (mouseEvent.dwEventFlags == MOUSE_MOVED)
+				// 	{
+				// 		// Handle mouse move event
+				// 	}
+				// 	else if (mouseEvent.dwEventFlags == 0)
+				// 	{
+				// 		// Handle mouse button press/release events
+				// 		if (mouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED)
+				// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Left});
+				// 		else if (mouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED)
+				// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Right});
+				// 	}
+				// 	break;
+				// }
 
 			default:
 				break;
@@ -74,7 +74,20 @@ std::vector<InputEvent> Input::GetInputEvents()
 
 	return events;
 }
+void Input::SimulateKeyPress(char key)
+{
+	INPUT_RECORD irInBuf[2];
+	irInBuf[0].EventType = KEY_EVENT;
+	irInBuf[0].Event.KeyEvent.bKeyDown = TRUE;
+	irInBuf[0].Event.KeyEvent.uChar.AsciiChar = key;
 
+	irInBuf[1].EventType = KEY_EVENT;
+	irInBuf[1].Event.KeyEvent.bKeyDown = FALSE;
+	irInBuf[1].Event.KeyEvent.uChar.AsciiChar = key;
+
+	DWORD cNumWritten;
+	WriteConsoleInput(hStdin, irInBuf, 2, &cNumWritten);
+}
 void Input::ErrorExit(LPCSTR lpszMessage)
 {
 	fprintf(stderr, "%s\n", lpszMessage);

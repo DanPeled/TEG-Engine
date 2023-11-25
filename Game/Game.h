@@ -13,7 +13,7 @@
 class Game
 {
 public:
-	static void start();
-	static void update();
+	static void Start();
+	static void Update();
 	static void exit();
 };

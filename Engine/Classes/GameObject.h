@@ -50,6 +50,6 @@ namespace TEG
 			return symbol;
 		}
 
-		virtual void render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
+		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
 	};
 }
