@@ -9,6 +9,14 @@
 #include <thread>
 #include <chrono>
 #include "Classes/UI/UI.h"
+#include <vector>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
+
+using namespace TEG;
+using namespace std;
+using namespace std::chrono;
 namespace TEG
 {
 	class Engine
@@ -18,6 +26,7 @@ namespace TEG
 		static void UpdateLoop();
 		static void PrintScreen();
 		static void Stop();
+		static double CalculateFPS();
 
 	private:
 		static void OnStop();
@@ -25,5 +34,9 @@ namespace TEG
 		static bool RUNNING;
 		static CONSOLE_SCREEN_BUFFER_INFO csbi;
 		static std::mutex screenMutex;
+		static int ticks;
+		static int frames;
+		static double lastFPS;
+		static high_resolution_clock::time_point lastTime;
 	};
 }

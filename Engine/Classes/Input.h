@@ -43,6 +43,8 @@ public:
     static void Initialize();
     static void Cleanup();
     static std::vector<InputEvent> GetInputEvents();
+    static void SimulateKeyPress(char key, bool shift, bool ctrl, bool alt);
+    static INPUT_RECORD CreateKeyEvent(char key, bool keyDown, bool shift, bool ctrl, bool alt);
     static void SimulateKeyPress(char key);
 
 private:

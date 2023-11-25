@@ -74,20 +74,40 @@ std::vector<InputEvent> Input::GetInputEvents()
 
 	return events;
 }
-void Input::SimulateKeyPress(char key)
+
+void Input::SimulateKeyPress(char key, bool shift, bool ctrl, bool alt)
 {
 	INPUT_RECORD irInBuf[2];
-	irInBuf[0].EventType = KEY_EVENT;
-	irInBuf[0].Event.KeyEvent.bKeyDown = TRUE;
-	irInBuf[0].Event.KeyEvent.uChar.AsciiChar = key;
 
-	irInBuf[1].EventType = KEY_EVENT;
-	irInBuf[1].Event.KeyEvent.bKeyDown = FALSE;
-	irInBuf[1].Event.KeyEvent.uChar.AsciiChar = key;
+	// Key down event
+	irInBuf[0] = CreateKeyEvent(key, true, shift, ctrl, alt);
+
+	// Key up event
+	irInBuf[1] = CreateKeyEvent(key, false, shift, ctrl, alt);
 
 	DWORD cNumWritten;
 	WriteConsoleInput(hStdin, irInBuf, 2, &cNumWritten);
 }
+void Input::SimulateKeyPress(char key)
+{
+	SimulateKeyPress(key, false, false, false);
+}
+INPUT_RECORD Input::CreateKeyEvent(char key, bool keyDown, bool shift, bool ctrl, bool alt)
+{
+	INPUT_RECORD ir;
+	ir.EventType = KEY_EVENT;
+	ir.Event.KeyEvent.bKeyDown = keyDown;
+	ir.Event.KeyEvent.wRepeatCount = 1;		   // Number of times the key is to be pressed/released
+	ir.Event.KeyEvent.wVirtualKeyCode = 0;	   // Virtual key code, not needed for ASCII characters
+	ir.Event.KeyEvent.wVirtualScanCode = 0;	   // Scan code, not needed for ASCII characters
+	ir.Event.KeyEvent.uChar.UnicodeChar = key; // ASCII character
+	ir.Event.KeyEvent.dwControlKeyState =
+		(shift ? SHIFT_PRESSED : 0) |
+		(ctrl ? LEFT_CTRL_PRESSED : 0) |
+		(alt ? LEFT_ALT_PRESSED : 0);
+	return ir;
+}
+
 void Input::ErrorExit(LPCSTR lpszMessage)
 {
 	fprintf(stderr, "%s\n", lpszMessage);

@@ -15,5 +15,5 @@ class Game
 public:
 	static void Start();
 	static void Update();
-	static void exit();
+	static void Exit();
 };

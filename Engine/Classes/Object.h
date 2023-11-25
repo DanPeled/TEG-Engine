@@ -20,16 +20,19 @@ namespace TEG
 
 	public:
 		Object(Vector2 position_) : position(position_) {}
-
 		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const = 0;
-		inline void setPos(Vector2 newPos)
+		inline void SetPos(Vector2 newPos)
 		{
 			position = newPos;
 		}
-		inline Vector2 getPos()
+		inline Vector2 GetPos()
 		{
 			return position;
 		}
+		virtual void Destory()
+		{
+			
+		};
 		static std::vector<std::reference_wrapper<TEG::Object>> objects;
 	};
 }

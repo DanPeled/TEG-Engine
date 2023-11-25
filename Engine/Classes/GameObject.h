@@ -22,30 +22,34 @@ namespace TEG
 		GameObject(Vector2 position_, int width_, int height_, char symbol_);
 		GameObject();
 		~GameObject();
+		void Destory() override
+		{
+			this->~GameObject();
+			delete this;
+		}
+		static GameObject *Instantiate(Vector2 pos, int width, int height, char symbol);
 
-		static GameObject* instantiate(Vector2 pos, int width, int height, char symbol);
-
-		inline Vector2 getPos() const
+		inline Vector2 GetPos() const
 		{
 			return position;
 		}
 
-		inline void setPos(Vector2 newPos)
+		inline void SetPos(Vector2 newPos)
 		{
 			position = newPos;
 		}
 
-		inline int getWidth() const
+		inline int GetWidth() const
 		{
 			return width;
 		}
 
-		inline int getHeight() const
+		inline int GetHeight() const
 		{
 			return height;
 		}
 
-		virtual inline char getSymbol() const
+		virtual inline char GetSymbol() const
 		{
 			return symbol;
 		}

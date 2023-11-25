@@ -18,9 +18,20 @@ GameObject::GameObject() : Object(defaultVector), position(defaultVector)
 
 GameObject::~GameObject()
 {
+    auto it = std::remove_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)
+                             { return &ref == this; });
+
+    if (it != Object::objects.end())
+    {
+        Object::objects.erase(it, Object::objects.end());
+    }
+    else
+    {
+        std::cerr << "Error: Object not found in objects vector." << std::endl;
+    }
 }
 
-GameObject* GameObject::instantiate(Vector2 pos, int width, int height, char symbol)
+GameObject *GameObject::Instantiate(Vector2 pos, int width, int height, char symbol)
 {
     GameObject *obj = new GameObject(pos, width, height, symbol);
     Object::objects.push_back(*obj);
@@ -40,10 +51,10 @@ void GameObject::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
     // }
 
     // Retrieve object properties
-    Vector2 startPos = this->getPos();
-    int width = this->getWidth();
-    int height = this->getHeight();
-    char symbol = this->getSymbol();
+    Vector2 startPos = this->GetPos();
+    int width = this->GetWidth();
+    int height = this->GetHeight();
+    char symbol = this->GetSymbol();
 
     // Create a HANDLE to the console output buffer
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

@@ -29,33 +29,35 @@ UI::Text::Text()
 	: Object(Vector2(0, 0)), position(Vector2(0, 0)), text(""), color(Color::WHITE)
 {
 }
-UI::Text *UI::Text::instantiate(Vector2 pos, std::string text, std::string color)
+UI::Text *UI::Text::Instantiate(Vector2 pos, std::string text, std::string color)
 {
 	UI::Text *obj = new UI::Text(pos, text, color);
 	Object::objects.push_back(*obj);
 	return obj;
 }
 
-UI::Text *UI::Text::instantiate(Vector2 pos, std::string text)
+UI::Text *UI::Text::Instantiate(Vector2 pos, std::string text)
 {
-	return instantiate(pos, text, Color::WHITE);
+	return Instantiate(pos, text, Color::WHITE);
 }
 
 void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
 	// Retrieve object properties
-	Vector2 startPos = this->getPos();
+	Vector2 startPos = this->GetPos();
 
 	// Create a HANDLE to the console output buffer
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	// Set the cursor position
-	COORD cursorPos = {static_cast<SHORT>(startPos.x), static_cast<SHORT>(startPos.y)};
+	COORD cursorPos = {static_cast<SHORT>(startPos.x), std::max<SHORT>(0, static_cast<SHORT>(startPos.y))};
+
 	SetConsoleCursorPosition(hConsole, cursorPos);
 
-	// Write the UTF-8 text to the console
+	// Write the UTF-8 text to the console with color
+	std::string coloredText = color + text + Color::RESET;
 	DWORD charsWritten;
-	if (!WriteConsoleOutputCharacterA(hConsole, text.c_str(), static_cast<DWORD>(text.size()), cursorPos, &charsWritten))
+	if (!WriteConsoleOutputCharacterA(hConsole, coloredText.c_str(), static_cast<DWORD>(coloredText.size()), cursorPos, &charsWritten))
 	{
 		DWORD error = GetLastError();
 		std::cerr << "Error writing to console. Error code: " << error << std::endl;

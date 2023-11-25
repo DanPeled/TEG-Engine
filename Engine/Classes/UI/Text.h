@@ -18,14 +18,14 @@ namespace TEG
 			Text(Vector2 position_, std::string text_);
 			Text(Vector2 position, std::string text_, std::string color_);
 			Text();
-			Vector2 getPos() const
+			Vector2 GetPos() const
 			{
 				return position;
 			}
 			void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
-			static Text *instantiate(Vector2 pos, std::string text);
-			static Text *instantiate(Vector2 pos, std::string text, std::string color);
-			inline void setPos(Vector2 newPos)
+			static Text *Instantiate(Vector2 pos, std::string text);
+			static Text *Instantiate(Vector2 pos, std::string text, std::string color);
+			inline void SetPos(Vector2 newPos)
 			{
 				system("cls");
 				position = newPos;
