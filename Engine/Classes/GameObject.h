@@ -28,17 +28,6 @@ namespace TEG
 			delete this;
 		}
 		static GameObject *Instantiate(Vector2 pos, int width, int height, char symbol);
-
-		inline Vector2 GetPos() const
-		{
-			return position;
-		}
-
-		inline void SetPos(Vector2 newPos)
-		{
-			position = newPos;
-		}
-
 		inline int GetWidth() const
 		{
 			return width;
@@ -54,6 +43,6 @@ namespace TEG
 			return symbol;
 		}
 
-		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
+		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const override;
 	};
 }

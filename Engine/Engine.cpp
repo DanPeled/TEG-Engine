@@ -48,7 +48,8 @@ void Engine::PrintScreen()
 	std::size_t vectorLength = Object::objects.size();
 	for (std::size_t i = 0; i < vectorLength; ++i)
 	{
-		Object::objects[i].get().Render(csbi);
+		if (Object::objects[i].get().GetEnabled())
+			Object::objects[i].get().Render(csbi);
 	}
 }
 double Engine::CalculateFPS()
