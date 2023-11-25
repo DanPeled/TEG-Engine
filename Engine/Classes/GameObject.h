@@ -21,12 +21,6 @@ namespace TEG
 	public:
 		GameObject(Vector2 position_, int width_, int height_, char symbol_);
 		GameObject();
-		~GameObject();
-		void Destory() override
-		{
-			this->~GameObject();
-			delete this;
-		}
 		static GameObject *Instantiate(Vector2 pos, int width, int height, char symbol);
 		inline int GetWidth() const
 		{

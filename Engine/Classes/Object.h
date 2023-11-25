@@ -21,7 +21,8 @@ namespace TEG
 		{
 			this->SetEnabled(true);
 			this->ID = ObtainID(this);
-		}
+		};
+		~Object();
 		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
 
 		inline void SetPos(Vector2 newPos)
@@ -32,9 +33,15 @@ namespace TEG
 		{
 			return position;
 		}
-		virtual void Destory(){
+		void Destory();
+		void DestoryChildren()
+		{
+			for (std::reference_wrapper<Object> child : GetChildren())
+			{
+				child.get().Destory();
+			}
+		}
 
-		};
 		void AddChild(Object *child)
 		{
 			unsigned int childID = ObtainID(child);

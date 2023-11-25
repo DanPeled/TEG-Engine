@@ -16,20 +16,7 @@ GameObject::GameObject() : Object(defaultVector), position(defaultVector)
 {
 }
 
-GameObject::~GameObject()
-{
-    auto it = std::remove_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)
-                             { return &ref == this; });
 
-    if (it != Object::objects.end())
-    {
-        Object::objects.erase(it, Object::objects.end());
-    }
-    else
-    {
-        std::cerr << "Error: Object not found in objects vector." << std::endl;
-    }
-}
 
 GameObject *GameObject::Instantiate(Vector2 pos, int width, int height, char symbol)
 {

@@ -11,6 +11,29 @@ void Object::SetEnabled(bool state)
 {
 	this->enabled = state;
 }
+void Object::Destory()
+{
+	this->~Object();
+	system("cls");
+}
+Object::~Object()
+{
+	auto it = std::remove_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)
+							 { return &ref == this; });
+
+	if (it != Object::objects.end())
+	{
+		Object::objects.erase(it, Object::objects.end());
+	}
+	else
+	{
+		std::cerr << "Error: Object not found in objects vector." << std::endl;
+	}
+	if (this->GetChildCount() > 0)
+	{
+		DestoryChildren();
+	}
+}
 Object Object::GetObjectWithID(unsigned int ID)
 {
 	auto it = std::find_if(objects.begin(), objects.end(),

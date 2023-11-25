@@ -41,6 +41,9 @@ void Game::Update()
 				myGameObject->AddChild(myGameObject2);
 				cout << myGameObject->GetChildren().size();
 				break;
+			case 'D':
+				myGameObject->Destory();
+				break;
 			}
 		}
 	}
