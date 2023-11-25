@@ -24,7 +24,7 @@ void Engine::UpdateLoop()
 		frames += 1;
 		Engine::PrintScreen();
 		Game::Update();
-		this_thread::sleep_for(chrono::milliseconds(25));
+		this_thread::sleep_for(chrono::milliseconds(22));
 	}
 	OnStop();
 }

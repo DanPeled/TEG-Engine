@@ -9,12 +9,13 @@ using namespace std::chrono;
 
 Vector2 startingPosition(12, 4);
 GameObject *myGameObject;
-GameObject *myGameObject2;
+UI::Text *myGameObject2;
 void Game::Start()
 {
-	myGameObject = GameObject::Instantiate(startingPosition, 5, 3, '#');
-	myGameObject2 = GameObject::Instantiate(startingPosition, 5, 7, '#');
+    myGameObject = GameObject::Instantiate(startingPosition, 5, 3, '#');
+    myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", FOREGROUND_GREEN);
 }
+
 
 void Game::Update()
 {
@@ -46,7 +47,7 @@ void Game::Update()
 
 	myGameObject->SetPos(myGameObject->GetPos() + Vector2(1, 0));
 
-	// myGameObject2->text = "FPS: " + std::to_string(Engine::CalculateFPS());
+	myGameObject2->text = "FPS: " + std::to_string(Engine::CalculateFPS());
 
 	if (myGameObject->GetPos().x >= 118)
 	{
