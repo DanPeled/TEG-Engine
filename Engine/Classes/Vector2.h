@@ -8,6 +8,7 @@ namespace TEG
 		int y;
 
 		Vector2(int x_, int y_) : x(x_), y(y_) {}
+		Vector2() : x(0), y(0){}
 
 		Vector2 operator+(const Vector2 &other) const
 		{

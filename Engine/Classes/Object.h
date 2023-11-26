@@ -17,7 +17,7 @@ namespace TEG
 	class Object : public std::enable_shared_from_this<Object>
 	{
 	public:
-		Object(Vector2 position_) : position(position_)
+		Object(Vector2 position_) : globalPosition(position_)
 		{
 			this->SetEnabled(true);
 			this->ID = ObtainID(this);
@@ -27,18 +27,18 @@ namespace TEG
 
 		inline void SetPos(Vector2 newPos)
 		{
-			position = newPos;
+			globalPosition = newPos;
 		}
 		inline Vector2 GetPos() const
 		{
-			return position;
+			return globalPosition;
 		}
-		void Destory();
-		void DestoryChildren()
+		void Destroy();
+		void DestroyChildren()
 		{
 			for (std::reference_wrapper<Object> child : GetChildren())
 			{
-				child.get().Destory();
+				child.get().Destroy();
 			}
 		}
 
@@ -60,7 +60,8 @@ namespace TEG
 		static std::vector<std::reference_wrapper<TEG::Object>> objects;
 
 	private:
-		Vector2 position;
+		Vector2 localPosition;
+		Vector2 globalPosition;
 		std::set<unsigned int> children; // A set to prevent multiple instances of the same object
 		std::uintptr_t ID;
 		bool enabled;

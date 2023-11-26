@@ -3,19 +3,27 @@ using namespace TEG;
 void Object::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
 }
+
 bool Object::GetEnabled()
 {
 	return this->enabled;
 }
+
 void Object::SetEnabled(bool state)
 {
 	this->enabled = state;
+	for (Object &child : GetChildren())
+	{
+		child.SetEnabled(state);
+	}
 }
-void Object::Destory()
+
+void Object::Destroy()
 {
 	this->~Object();
 	system("cls");
 }
+
 Object::~Object()
 {
 	auto it = std::remove_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)
@@ -31,7 +39,7 @@ Object::~Object()
 	}
 	if (this->GetChildCount() > 0)
 	{
-		DestoryChildren();
+		DestroyChildren();
 	}
 }
 Object Object::GetObjectWithID(unsigned int ID)

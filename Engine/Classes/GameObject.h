@@ -13,15 +13,12 @@ namespace TEG
 {
 	class GameObject : public Object
 	{
-		Vector2 position;
-		int width;
-		int height;
-		char symbol;
 
 	public:
-		GameObject(Vector2 position_, int width_, int height_, char symbol_);
+		bool hasFill;
+		GameObject(Vector2 position_, int width_, int height_, char symbol_, bool hasFill_);
 		GameObject();
-		static GameObject *Instantiate(Vector2 pos, int width, int height, char symbol);
+		static GameObject *Instantiate(Vector2 pos, int width, int height, char symbol, bool hasFill_);
 		inline int GetWidth() const
 		{
 			return width;
@@ -36,7 +33,11 @@ namespace TEG
 		{
 			return symbol;
 		}
-
 		virtual void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const override;
+
+	private:
+		int width;
+		int height;
+		char symbol;
 	};
 }

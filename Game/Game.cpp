@@ -12,10 +12,10 @@ GameObject *myGameObject;
 UI::Text *myGameObject2;
 void Game::Start()
 {
-    myGameObject = GameObject::Instantiate(startingPosition, 5, 3, '#');
-    myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", FOREGROUND_GREEN);
+	myGameObject = GameObject::Instantiate(startingPosition, 5, 5, '#', false);
+	myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", FOREGROUND_GREEN);
+	myGameObject->AddChild(myGameObject2);
 }
-
 
 void Game::Update()
 {
@@ -42,16 +42,22 @@ void Game::Update()
 				cout << myGameObject->GetChildren().size();
 				break;
 			case 'D':
-				myGameObject->Destory();
+				myGameObject->Destroy();
+				break;
+			case 'E':
+				myGameObject->SetEnabled(!myGameObject->GetEnabled());
 				break;
 			}
 		}
 	}
 
 	myGameObject->SetPos(myGameObject->GetPos() + Vector2(1, 0));
-
-	myGameObject2->text = "FPS: " + std::to_string(Engine::CalculateFPS());
-
+	std::string text = "- " + std::to_string(myGameObject->GetID()) + "\n";
+	for (Object &child : myGameObject->GetChildren())
+	{
+		text += "\tL " + std::to_string(child.GetID()) + "\n";
+	}
+	myGameObject2->text = text;
 	if (myGameObject->GetPos().x >= 118)
 	{
 		myGameObject->SetPos(Vector2(-3, myGameObject->GetPos().y));
