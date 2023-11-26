@@ -14,6 +14,22 @@
 #include <set>
 namespace TEG
 {
+	class ConsoleAttributes
+	{
+	public:
+		static const WORD RESET = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE; // Default console attributes
+		static const WORD BLACK = 0;
+		static const WORD RED = FOREGROUND_RED;
+		static const WORD GREEN = FOREGROUND_GREEN;
+		static const WORD YELLOW = FOREGROUND_RED | FOREGROUND_GREEN;
+		static const WORD BLUE = FOREGROUND_BLUE;
+		static const WORD MAGENTA = FOREGROUND_RED | FOREGROUND_BLUE;
+		static const WORD CYAN = FOREGROUND_GREEN | FOREGROUND_BLUE;
+		static const WORD WHITE = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+		static const WORD UNDERLINE = COMMON_LVB_UNDERSCORE; /*Might not work in some terminals*/
+		static const WORD STRIKETHROUGH = 0x8000;			 /*Might not work in some terminals*/
+		static const WORD BOLD = FOREGROUND_INTENSITY;		 /*Might not work in some terminals*/
+	};
 	class Object : public std::enable_shared_from_this<Object>
 	{
 	public:

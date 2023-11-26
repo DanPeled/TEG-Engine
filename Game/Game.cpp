@@ -9,11 +9,12 @@ using namespace std::chrono;
 
 Vector2 startingPosition(12, 4);
 GameObject *myGameObject;
-UI::Text *myGameObject2;
+UI::Button *myGameObject2;
 void Game::Start()
 {
 	myGameObject = GameObject::Instantiate(startingPosition, 5, 5, '#', false);
-	myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", FOREGROUND_GREEN);
+	myGameObject2 = UI::Button::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN, +[]()
+											{ cout << "Test"; });
 	myGameObject->AddChild(myGameObject2);
 }
 

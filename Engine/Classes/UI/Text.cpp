@@ -2,16 +2,16 @@
 using namespace TEG;
 
 UI::Text::Text(Vector2 position_, std::string text_)
-	: Object(position_), globalPosition(position_), text(text_), color(ConsoleAttributes().WHITE)
+	: Object(position_), text(text_), color(ConsoleAttributes().WHITE)
 {
 }
 
-UI::Text::Text(Vector2 position_, std::string text_, WORD color_) : Object(position_), globalPosition(globalPosition), text(text_), color(color_)
+UI::Text::Text(Vector2 position_, std::string text_, WORD color_) : Object(position_), text(text_), color(color_)
 {
 }
 
 UI::Text::Text()
-	: Object(Vector2(0, 0)), globalPosition(Vector2(0, 0)), text(""), color(ConsoleAttributes().WHITE)
+	: Object(Vector2(0, 0)), text(""), color(ConsoleAttributes().WHITE)
 {
 }
 
