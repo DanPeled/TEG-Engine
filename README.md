@@ -13,7 +13,7 @@ or
 ```
 
 ---
-# Engine.cpp
+# [Engine.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Engine.cpp)
 > <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span>
 ## Init
 The `Engine::Init(Game game_)` function starts up the Input class, and calls the start function on the game class provided to it on the main file.
@@ -30,7 +30,7 @@ The `PrintScreen()` function handles rendering the screen and going through the 
 ---
 ## Stop
 The `Engine::OnStop()` function handles stopping the engine, and goes through the following steps:
-- starts by calling the `Exit()` function on the game variable (that was passed in the `Engine::Init(Game game_)` function).
+- starts by calling the `Exit()` function on the game variable (that was passed in the [`Engine::Init(Game game_)`](https://github.com/DanPeled/TEG-Engine/tree/main#init) function).
 - Clears the screen.
 - Prints out "Engine Stopped." for debug purposes.
 - Cleans up the Input class by calling the `Input::Cleanup()` function.
