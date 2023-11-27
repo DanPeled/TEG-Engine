@@ -2,7 +2,7 @@
 > <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C++</span>
 # Make into an EXE: 
 
-**TEG engine is currently only *Windows* supported**
+**TEG engine is currently only *Windows* supported** </br>
 In order to make the project into an executable, run the compile.bat file, here's the cmd command:
 ```bash
 compile.bat
