@@ -1,5 +1,5 @@
 # TEG-Engine
-> <span style="font-weight: bold; color: gray;">TEG Game Engine - A text based game engine made in C++</span>
+> <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C++</span>
 # Make into an EXE: 
 
 **TEG engine is currently only *Windows* supported**
@@ -14,7 +14,7 @@ or
 
 ---
 # Engine.cpp
-> <span style="font-weight: bold; color: gray;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span>
+> <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span>
 ## Init
 The `Engine::Init(Game game_)` function starts up the Input class, and calls the start function on the game class provided to it on the main file.
 
