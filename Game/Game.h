@@ -1,4 +1,5 @@
 #pragma once
+#include "../Engine/Engine.h"
 #include "../Engine/Classes/Vector2.h"
 #include "../Engine/Classes/GameObject.h"
 #include "../Engine/Classes/UI/UI.h"
@@ -9,7 +10,8 @@
 #include <vector>
 #include <thread>
 #include <chrono>
-#include "../Engine/Engine.h"
+
+// Inherit from this class to make your main game file
 class Game
 {
 public:

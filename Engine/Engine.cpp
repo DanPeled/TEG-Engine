@@ -1,18 +1,18 @@
 #include <iostream>
 #include <thread>
-#include "../Game/Game.h"
 #include "Engine.h"
-#include <algorithm>
-
+#include "../Game/Game.h"
 int Engine::ticks = 0;
 int Engine::frames = 0;
 high_resolution_clock::time_point Engine::lastTime;
 double Engine::lastFPS = 0;
-void Engine::Init()
+Game game;
+void Engine::Init(Game game_)
 {
+	game = game_;
 	Input::Initialize();
 	cout << "Engine initialized." << endl;
-	Game::Start();
+	game.Start();
 	lastTime = high_resolution_clock::now();
 }
 
@@ -23,7 +23,7 @@ void Engine::UpdateLoop()
 		ticks += 1;
 		frames += 1;
 		Engine::PrintScreen();
-		Game::Update();
+		game.Update();
 		this_thread::sleep_for(chrono::milliseconds(22));
 	}
 	OnStop();
@@ -36,10 +36,10 @@ void Engine::Stop()
 
 void Engine::OnStop()
 {
+	game.Exit();
 	system("cls");
 	cout << "Engine stopped." << endl;
 	Input::Cleanup();
-	Game::Exit();
 }
 
 void Engine::PrintScreen()

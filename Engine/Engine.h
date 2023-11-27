@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <windows.h>
 #include "Classes/GameObject.h"
@@ -13,16 +15,17 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
-
+#include <algorithm>
 using namespace TEG;
 using namespace std;
 using namespace std::chrono;
+class Game;
 namespace TEG
 {
 	class Engine
 	{
 	public:
-		static void Init();
+		static void Init(Game game_);
 		static void UpdateLoop();
 		static void PrintScreen();
 		static void Stop();
@@ -40,3 +43,5 @@ namespace TEG
 		static high_resolution_clock::time_point lastTime;
 	};
 }
+
+#endif
