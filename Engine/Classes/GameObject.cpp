@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include "../Util/colors.h"
 #include <iostream>
 #include <algorithm>
 
@@ -22,6 +21,7 @@ GameObject *GameObject::Instantiate(Vector2 pos, int width, int height, char sym
     Object::objects.push_back(*obj);
     return obj;
 }
+
 void GameObject::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
     // Ensure 'this' is in the objects vector

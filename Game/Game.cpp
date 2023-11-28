@@ -1,5 +1,4 @@
 #include "Game.h"
-
 using namespace TEG;
 using namespace std::chrono;
 
