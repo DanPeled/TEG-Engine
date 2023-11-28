@@ -47,6 +47,8 @@ The `Engine::OnStop()` function handles stopping the engine, and goes through th
 - Prints out "Engine Stopped." for debug purposes.
 - Cleans up the Input class by calling the `Input::Cleanup()` function.
 
+---
+
 # Object.cpp
 The Object class is an abstract class that behaves as a template for classes such as the `GameObject` class, and has some basic function that are the same for all the instances. </br></br>
 **<u>Take in notice:</u>** The Object class should **NOT** be used be used by itself, and instead be used by classes that derive from it. 
