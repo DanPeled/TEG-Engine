@@ -1,6 +1,8 @@
 # TEG-Engine
+
+[![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Windows Terminal](https://img.shields.io/badge/Windows%20Terminal-%234D4D4D.svg?style=for-the-badge&logo=windows-terminal&logoColor=white)
 > <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C++</span>
-# Make into an EXE: 
+# Getting Started: 
 
 **TEG engine is currently only *Windows* supported** </br>
 In order to make the project into an executable, run the compile.bat file, here's the cmd command:
@@ -13,6 +15,7 @@ or
 ```
 
 ---
+# Documentation :
 # [Engine.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Engine.cpp)
 > <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span>
 ## Init

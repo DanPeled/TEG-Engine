@@ -1,6 +1,6 @@
 #include "Engine/Engine.h"
-#include <thread>
 #include "Game/Game.h"
+#include <thread>
 using namespace TEG;
 
 int main()

@@ -1,9 +1,5 @@
 #include "Game.h"
-#include <algorithm>
-#include <vector>
-#include <chrono>
-#include <iomanip>
-#include <sstream>
+
 using namespace TEG;
 using namespace std::chrono;
 
