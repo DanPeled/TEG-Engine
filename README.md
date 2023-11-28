@@ -38,4 +38,11 @@ The `Engine::OnStop()` function handles stopping the engine, and goes through th
 - Prints out "Engine Stopped." for debug purposes.
 - Cleans up the Input class by calling the `Input::Cleanup()` function.
 
+# Object.cpp
+The Object class is an abstract class that behaves as a template for classes such as the GameObject class, and has some basic function that are the same for all the instances.
+## Main Class
+### Constructor
+The constructor recives the initial position of the Object instance, and saves it into memory, and it shouldn't be used by itself most of the time, instead you might use the Instantiate() function.
+## Console Attributes Class
+The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BlACK, RED, GREEN/
 ---
