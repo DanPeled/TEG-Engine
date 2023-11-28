@@ -1,7 +1,12 @@
-# TEG-Engine
+
+<div align="center">
+
+  # TEG-Engine
 
 [![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Windows Terminal](https://img.shields.io/badge/Windows%20Terminal-%234D4D4D.svg?style=for-the-badge&logo=windows-terminal&logoColor=white)
 > <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C++</span>
+</div>
+
 # Getting Started: 
 
 **TEG engine is currently only *Windows* supported** </br>
