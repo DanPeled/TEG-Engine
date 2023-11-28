@@ -44,6 +44,6 @@ The Object class is an abstract class that behaves as a template for classes suc
 ### Constructor
 The constructor recives the initial position of the Object instance, and saves it into memory, and it shouldn't be used by itself most of the time, instead you might use the Instantiate() function.
 ## Console Attributes Class
-The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BlACK, RED, GREEN.
+The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BLACK, RED, GREEN.
 
 ---
