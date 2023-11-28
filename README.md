@@ -1,7 +1,12 @@
-# TEG-Engine
+
+<div align="center">
+
+  # TEG Game Engine
 
 [![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Windows Terminal](https://img.shields.io/badge/Windows%20Terminal-%234D4D4D.svg?style=for-the-badge&logo=windows-terminal&logoColor=white)
 > <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C++</span>
+</div>
+
 # Getting Started: 
 
 **TEG engine is currently only *Windows* supported** </br>
@@ -47,6 +52,7 @@ The Object class is an abstract class that behaves as a template for classes suc
 The constructor recives the initial position of the Object instance, and saves it into memory, and it shouldn't be used by itself most of the time, instead you might use the `Instantiate()`function, provided by classes such as `GameObject` & `Text`.
 
 ## Console Attributes Class
-The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BlACK, RED, GREEN/
+The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BLACK, RED, GREEN.
+
 ---
 
