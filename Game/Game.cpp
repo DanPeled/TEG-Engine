@@ -11,6 +11,7 @@ void Game::Start()
 	myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN /*, +[]()
 											{ cout << "Test"; }*/
 	);
+	
 	myGameObject->AddChild(myGameObject2);
 }
 

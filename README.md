@@ -123,7 +123,7 @@ GameObject *obj = GameObject::Instantiate(
   5,            // width
   5,            // height
   '#',          // symbol
-  true,         // hasFill
+  true          // hasFill
 );  
 ``` 
 * Take in care, the function returns back a *pointer* to the actual object
