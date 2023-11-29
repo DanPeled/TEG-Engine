@@ -56,7 +56,8 @@ The Object class is an abstract class that behaves as a template for classes suc
 ## Main Class
 ### Constructor
 The constructor recives the initial position of the Object instance, saves it into memory, and assigns an ID to the object according to it's position in memory. The constructor shouldn't be used by itself most of the time, instead you might use the `Instantiate()`function, provided by classes such as `GameObject` & `Text`.
-
+### Object Render List
+Inside of the `Object` class, you can find the `objects` refrence wrapper vector, that automatically stores refrences to all the objects that were created using `Instantiate()` function, and each frame of the engine calls the render function of each one of the refrences.
 ### Enabling & Disabling An Instance
 The `SetEnabled(bool state)` function sets the state (Enabled / Disabled) of the object its being called on. For an example in this code snippet: 
 ```cpp
@@ -68,6 +69,7 @@ it disables the object & it's children from being rendered on the screen.
 ---
 ### Child-Parent Relations
 Child-Parent relations let you accomplish stuff like disabling multiple objects at the same time, or moving objects in-sync.
+
 #### Adding Children
 The `AddChild(Object *child)` function takes in a refrence to the child you want to add to the parent object, and adds it's ID to the children array, and should be used like this: 
 ```cpp
@@ -102,3 +104,42 @@ The ConsoleAttributes class holds data for coloring text and objects in the term
 
 ---
 
+# [GameObject.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/GameObject.h)
+The GameObject class is a class for basic rectangle-like shape rendering, which will probably have more shapes to it in the future.
+
+## Instantiation
+Instantiation of an instance of this class is important for it to be automatically rendered into the screen, and is done by using the `GameObject::Instantiate()` static function, that takes in the following arguments:
+- `Vector2 pos` - For the initial position of the GameObject.
+- `int width` - For the width of the GameObject.
+- `int height` - For the height of the GameObject.
+- `char symbol` - For the symbol the GameObject will be constructed of, # for an example.
+- `bool hasFill_` - For checking if the renderer should fill the shape.
+</br>
+
+The function should by used like in the following:
+```cpp
+GameObject *obj = GameObject::Instantiate(
+  Vector2(3,5), // pos
+  5,            // width
+  5,            // height
+  '#',          // symbol
+  true,         // hasFill
+);  
+``` 
+* Take in care, the function returns back a *pointer* to the actual object
+
+The function works by: 
+1. First calling the constructor on a new GameObject instance it creates
+1. Adding it to the `Object::objects` render array
+1. Returning back the pointer to the object it created
+
+## Render Function
+The `Render()` function takes care of rendering the game object on the screen, and goes through the following steps: 
+
+1. Makes sure the object used is in the `Object::objects` vector, and if it isn't throws an error message.
+
+1. Goes through the positions the GameObject's instance rendering should be in, and adds them into a char buffer.
+
+1. Renders the char buffer on the screen.
+
+---
