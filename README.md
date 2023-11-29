@@ -27,8 +27,9 @@ or
 The `Engine::Init(Game game_)` function starts up the Input class, and calls the start function on the game class provided to it on the main file. </br></br>
 <u>Example Usage: </u>
 ```cpp
-Engine::Init(Game()); // Doesn't have to be the Game class, can be any class that derives from the Game class
+Engine::Init(Game());
 ```
+It doesn't have to be the `Game` class, can be any class that derives from the `Game` class
 
 ---
 ## Update Loop
