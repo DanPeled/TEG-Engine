@@ -22,7 +22,25 @@ or
 ---
 # Documentation :
 # [Engine.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Engine.cpp)
-> <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span>
+> <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span> </br>
+
+Sample main file:
+```cpp
+#include "Engine/Engine.h"
+#include "Game/Game.h"
+#include <thread>
+using namespace TEG;
+
+int main()
+{
+	Engine::Init(Game());
+
+	std::thread updateThread(&Engine::UpdateLoop);
+
+	updateThread.join();
+	return 0;
+}
+```
 ## Init
 The `Engine::Init(Game game_)` function starts up the Input class, and calls the start function on the game class provided to it on the main file. </br></br>
 <u>Example Usage: </u>
@@ -33,7 +51,7 @@ It doesn't have to be the `Game` class, can be any class that derives from the `
 
 ---
 ## Update Loop
-On the `Engine::UpdateLoop()` function, the `Engine::PrintScreen()` function
+On the `Engine::UpdateLoop()` function, rendering of all of the object is being handled, mostly using the `Engine::PrintScreen()` function.
 
 ### Print Screen
 The `PrintScreen()` function handles rendering the screen and going through the following steps:
