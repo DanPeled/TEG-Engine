@@ -29,7 +29,7 @@ UI::Text *UI::Text::Instantiate(Vector2 pos, std::string text)
 void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
 	// Retrieve object properties
-	Vector2 startPos = this->GetPos();
+	Vector2 startPos = this->GetGlobalPosition();
 
 	// Create a HANDLE to the console output buffer
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

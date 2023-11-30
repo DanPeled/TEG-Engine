@@ -11,7 +11,7 @@ void Game::Start()
 	myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN /*, +[]()
 											{ cout << "Test"; }*/
 	);
-	
+
 	myGameObject->AddChild(myGameObject2);
 }
 
@@ -49,16 +49,17 @@ void Game::Update()
 		}
 	}
 
-	myGameObject->SetPos(myGameObject->GetPos() + Vector2(1, 0));
-	std::string text = "- " + std::to_string(myGameObject->GetID()) + "\n";
+	myGameObject->SetPos(myGameObject->GetGlobalPosition() + Vector2(1, 0));
+	std::string text = "- " + std::to_string(myGameObject->GetID()) + "\n" + std::to_string(myGameObject2->GetParentOffset().x) +
+					   " " + std::to_string(myGameObject2->GetParentOffset().y) + "\n";
 	for (Object &child : myGameObject->GetChildren())
 	{
 		text += "\tL " + std::to_string(child.GetID()) + "\n";
 	}
 	myGameObject2->text = text;
-	if (myGameObject->GetPos().x >= 118)
+	if (myGameObject->GetGlobalPosition().x >= 118)
 	{
-		myGameObject->SetPos(Vector2(-3, myGameObject->GetPos().y));
+		myGameObject->SetPos(Vector2(-3, myGameObject->GetGlobalPosition().y));
 	}
 }
 

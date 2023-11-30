@@ -35,7 +35,7 @@ namespace TEG
 	class Object : public std::enable_shared_from_this<Object>
 	{
 	public:
-		Object(Vector2 position_) : localPosition(Vector2(0, 0)), globalPosition(position_)
+		Object(Vector2 position_) : globalPosition(position_), parentOffset(Vector2(0, 0))
 		{
 			this->SetEnabled(true);
 			this->ID = ObtainID(this);
@@ -48,18 +48,19 @@ namespace TEG
 		inline void SetPos(Vector2 newPos)
 		{
 			globalPosition = newPos;
+			for (std::reference_wrapper<Object> child : GetChildren())
+			{
+				child.get().SetPos(newPos - child.get().GetParentOffset());
+			}
 		}
-
-		inline Vector2 GetPos() const
+		inline Vector2 GetLocalPositon()
 		{
-			return localPosition + globalPosition;
-		}
-
-		void SetLocalPos(Vector2 newPos)
-		{
-			localPosition = newPos;
+			return this->parentOffset - this->globalPosition;
 		};
-
+		inline Vector2 GetGlobalPosition() const
+		{
+			return globalPosition;
+		}
 		void Destroy();
 		void DestroyChildren()
 		{
@@ -73,9 +74,13 @@ namespace TEG
 		{
 			unsigned int childID = ObtainID(child);
 			children.insert(childID);
-			child->SetLocalPos(child->GetPos() - GetPos());
+			child->SetPos(child->GetGlobalPosition() - GetGlobalPosition());
+			child->parentOffset = globalPosition - child->GetGlobalPosition();
 		}
-
+		Vector2 GetParentOffset()
+		{
+			return this->parentOffset;
+		}
 		int GetChildCount()
 		{
 			return this->children.size();
@@ -89,7 +94,7 @@ namespace TEG
 		static std::vector<std::reference_wrapper<Object>> objects;
 
 	private:
-		Vector2 localPosition;
+		Vector2 parentOffset;
 		Vector2 globalPosition;
 		std::set<unsigned int> children;
 		std::uintptr_t ID;
