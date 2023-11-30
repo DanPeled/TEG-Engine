@@ -97,6 +97,8 @@ GameObject *parent = GameObject::Instantiate(args...);
 GameObject *child = GameObject::Instantiate(args...);
 parent->AddChild(child);
 ```
+#### Position-Relation
+Every time you will call the `SetPos()` function on a object, it will trigger the function also for all its children, and make them move aswell, according to their initial offset from their parent.
 
 #### Getting Amount Of Children
 It is possible to get the amount of children of an `Object` class-derived instance using the `GetChildCount()` function, like in the following code snippet: 

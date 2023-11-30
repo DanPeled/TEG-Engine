@@ -35,7 +35,7 @@ Object::~Object()
 	}
 	else
 	{
-		std::cerr << "Error: Object not found in objects vector." << std::endl;
+		// std::cerr << "Error: Object not found in objects vector." << std::endl;
 	}
 	if (this->GetChildCount() > 0)
 	{

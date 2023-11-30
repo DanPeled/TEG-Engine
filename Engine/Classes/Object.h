@@ -51,6 +51,7 @@ namespace TEG
 			for (std::reference_wrapper<Object> child : GetChildren())
 			{
 				child.get().SetPos(newPos - child.get().GetParentOffset());
+				child.get().parentOffset = CalculateParentChildOffset(child.get());
 			}
 		}
 		inline Vector2 GetLocalPositon()
@@ -75,7 +76,7 @@ namespace TEG
 			unsigned int childID = ObtainID(child);
 			children.insert(childID);
 			child->SetPos(child->GetGlobalPosition() - GetGlobalPosition());
-			child->parentOffset = globalPosition - child->GetGlobalPosition();
+			child->parentOffset = CalculateParentChildOffset(*child);
 		}
 		Vector2 GetParentOffset()
 		{
@@ -103,6 +104,10 @@ namespace TEG
 		{
 			std::uintptr_t address = reinterpret_cast<std::uintptr_t>(obj);
 			return address;
+		}
+		Vector2 CalculateParentChildOffset(Object child)
+		{
+			return globalPosition - child.GetGlobalPosition();
 		}
 	};
 }
