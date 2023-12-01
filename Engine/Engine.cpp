@@ -44,32 +44,32 @@ void Engine::OnStop()
 
 void Engine::RenderObjects()
 {
-    system("cls");
-    std::size_t vectorLength = Object::objects.size();
-    const std::size_t numThreads = std::thread::hardware_concurrency();  // Get the number of available threads
+	system("cls");
+	std::size_t vectorLength = Object::objects.size();
+	const std::size_t numThreads = std::thread::hardware_concurrency(); // Get the number of available threads
 
-    std::vector<std::future<void>> futures;
+	std::vector<std::future<void>> futures;
 
-    // Divide the rendering work among multiple threads
-    for (std::size_t i = 0; i < numThreads; ++i)
-    {
-        std::size_t start = i * vectorLength / numThreads;
-        std::size_t end = (i + 1) * vectorLength / numThreads;
+	// Divide the rendering work among multiple threads
+	for (std::size_t i = 0; i < numThreads; ++i)
+	{
+		std::size_t start = i * vectorLength / numThreads;
+		std::size_t end = (i + 1) * vectorLength / numThreads;
 
-        futures.emplace_back(std::async(std::launch::async, [start, end]() {
+		futures.emplace_back(std::async(std::launch::async, [start, end]()
+										{
             for (std::size_t j = start; j < end; ++j)
             {
                 if (Object::objects[j].get().GetEnabled())
                     Object::objects[j].get().Render(csbi);
-            }
-        }));
-    }
+            } }));
+	}
 
-    // Wait for all threads to finish
-    for (auto& future : futures)
-    {
-        future.wait();
-    }
+	// Wait for all threads to finish
+	for (auto &future : futures)
+	{
+		future.wait();
+	}
 }
 
 double Engine::CalculateFPS()
