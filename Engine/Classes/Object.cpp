@@ -20,12 +20,6 @@ void Object::SetEnabled(bool state)
 
 void Object::Destroy()
 {
-	this->~Object();
-	system("cls");
-}
-
-Object::~Object()
-{
 	auto it = std::remove_if(Object::objects.begin(), Object::objects.end(), [this](Object &ref)
 							 { return &ref == this; });
 
@@ -41,7 +35,10 @@ Object::~Object()
 	{
 		DestroyChildren();
 	}
+	system("cls");
 }
+Object::~Object() {}
+
 Object Object::GetObjectWithID(unsigned int ID)
 {
 	auto it = std::find_if(objects.begin(), objects.end(),
