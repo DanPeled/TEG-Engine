@@ -8,6 +8,7 @@ high_resolution_clock::time_point Engine::lastTime;
 double Engine::lastFPS = 0;
 Game game;
 std::vector<std::reference_wrapper<TEG::Object>> TEG::Object::objects = {};
+std::vector<Log> Engine::logs;
 void Engine::Init(Game game_)
 {
 	logs = {};
