@@ -29,12 +29,14 @@ void Input::Cleanup()
 
 std::vector<InputEvent> Input::GetInputEvents()
 {
+	constexpr DWORD bufferSize = 128;
 	std::vector<InputEvent> events;
+	events.reserve(bufferSize);
 
 	DWORD cNumRead;
-	INPUT_RECORD irInBuf[128];
+	INPUT_RECORD irInBuf[bufferSize];
 
-	if (ReadConsoleInput(hStdin, irInBuf, 128, &cNumRead))
+	if (ReadConsoleInput(hStdin, irInBuf, bufferSize, &cNumRead))
 	{
 		for (DWORD i = 0; i < cNumRead; ++i)
 		{
@@ -48,26 +50,6 @@ std::vector<InputEvent> Input::GetInputEvents()
 					events.push_back({InputEventType::KeyClicked, irInBuf[i].Event.KeyEvent.uChar.AsciiChar});
 				}
 				break;
-
-				// case MOUSE_EVENT:
-				// {
-				// 	MOUSE_EVENT_RECORD mouseEvent = irInBuf[i].Event.MouseEvent;
-				// 	events.push_back({InputEventType::MouseMoved, mouseEvent.dwMousePosition.X, mouseEvent.dwMousePosition.Y});
-
-				// 	if (mouseEvent.dwEventFlags == MOUSE_MOVED)
-				// 	{
-				// 		// Handle mouse move event
-				// 	}
-				// 	else if (mouseEvent.dwEventFlags == 0)
-				// 	{
-				// 		// Handle mouse button press/release events
-				// 		if (mouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED)
-				// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Left});
-				// 		else if (mouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED)
-				// 			events.push_back({InputEventType::MouseButtonPressed, MouseButton::Right});
-				// 	}
-				// 	break;
-				// }
 
 			default:
 				break;

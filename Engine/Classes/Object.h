@@ -11,7 +11,7 @@
 #include <memory>
 #include <string>
 #include <set>
-
+#include "Component.h"
 namespace TEG
 {
 	// Class for handling console attributes
@@ -75,7 +75,10 @@ namespace TEG
 
 		// Destroy the object and its children
 		void Destroy();
-
+		// void AddComponent(Component comp)
+		// {
+		// 	components.insert(comp);
+		// }
 		// Destroy only the children of the object
 		void DestroyChildren()
 		{
@@ -130,11 +133,12 @@ namespace TEG
 		static std::vector<std::reference_wrapper<Object>> objects;
 
 	private:
-		Vector2 parentOffset;			 // Offset from the parent object
-		Vector2 globalPosition;			 // Global position of the object
-		std::set<unsigned int> children; // Set of child IDs
-		std::uintptr_t ID;				 // Unique ID of the object
-		bool enabled;					 // Flag indicating if the object is enabled
+		Vector2 parentOffset;				 // Offset from the parent object
+		Vector2 globalPosition;				 // Global position of the object
+		std::set<unsigned int> children;	 // Set of child IDs
+		// std::set<Component> components = {}; // Set to store Object components
+		std::uintptr_t ID;					 // Unique ID of the object
+		bool enabled;						 // Flag indicating if the object is enabled
 
 		// Obtain a unique ID for an object based on its memory address
 		unsigned int ObtainID(Object *obj)

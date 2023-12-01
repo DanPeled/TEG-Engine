@@ -29,11 +29,13 @@ namespace TEG
 	public:
 		static void Init(Game game_);
 		static void UpdateLoop();
-		static void PrintScreen();
+		static void RenderObjects();
 		static void Stop();
 		static double CalculateFPS();
 		static void LogOut(LogType type, std::string content);
 		static void LogOut(Log l);
+		static unsigned int sleepTime;
+
 	private:
 		static void OnStop();
 		static std::string screen;
@@ -46,7 +48,6 @@ namespace TEG
 		static high_resolution_clock::time_point lastTime;
 		static vector<Log> logs;
 	};
-	
 
 }
 

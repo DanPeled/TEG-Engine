@@ -3,16 +3,17 @@ using namespace TEG;
 using namespace std::chrono;
 
 Vector2 startingPosition(12, 4);
-GameObject *myGameObject;
-UI::Text *myGameObject2;
+GameObject *parentObj;
+UI::Text *text1;
+UI::Text *fpsText;
 void Game::Start()
 {
-	myGameObject = GameObject::Instantiate(startingPosition, 5, 5, '#', false);
-	myGameObject2 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN /*, +[]()
+	parentObj = GameObject::Instantiate(startingPosition, 5, 5, '#', false);
+	text1 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN /*, +[]()
 											{ cout << "Test"; }*/
 	);
-
-	myGameObject->AddChild(myGameObject2);
+	fpsText = UI::Text::Instantiate(startingPosition - Vector2(0, 2), "FPS: 0", ConsoleAttributes().BLUE);
+	parentObj->AddChild(text1);
 }
 
 void Game::Update()
@@ -36,30 +37,34 @@ void Game::Update()
 				Engine::Stop();
 				break;
 			case 'A':
-				myGameObject->AddChild(myGameObject2);
-				std::cout << myGameObject->GetChildren().size();
-				break;
-			case 'D':
-				myGameObject->Destroy();
+				parentObj->AddChild(text1);
+				std::cout << parentObj->GetChildren().size();
 				break;
 			case 'E':
-				myGameObject->SetEnabled(!myGameObject->GetEnabled());
+				parentObj->SetEnabled(!parentObj->GetEnabled());
+				break;
+			case 'W':
+				Engine::sleepTime += 1;
+				break;
+			case 'S':
+				Engine::sleepTime -= 1;
 				break;
 			}
 		}
 	}
-	
-	myGameObject->SetPos(myGameObject->GetGlobalPosition() + Vector2(1, 0));
-	std::string text = "- " + std::to_string(myGameObject->GetID()) + "\n" + std::to_string(myGameObject2->GetParentOffset().x) +
-					   " " + std::to_string(myGameObject2->GetParentOffset().y) + "\n";
-	for (Object &child : myGameObject->GetChildren())
+
+	parentObj->SetPos(parentObj->GetGlobalPosition() + Vector2(1, 0));
+	std::string text = "- " + std::to_string(parentObj->GetID()) + "\n" + std::to_string(text1->GetParentOffset().x) +
+					   " " + std::to_string(text1->GetParentOffset().y) + "\n";
+	fpsText->text = "FPS: " + std::to_string(Engine::CalculateFPS()) + "\n" + "Sleep Time: " + std::to_string(Engine::sleepTime);
+	for (Object &child : parentObj->GetChildren())
 	{
 		text += "\tL " + std::to_string(child.GetID()) + "\n";
 	}
-	myGameObject2->text = text;
-	if (myGameObject->GetGlobalPosition().x >= 118)
+	text1->text = text;
+	if (parentObj->GetGlobalPosition().x >= 118)
 	{
-		myGameObject->SetPos(Vector2(-3, myGameObject->GetGlobalPosition().y));
+		parentObj->SetPos(Vector2(-3, parentObj->GetGlobalPosition().y));
 	}
 }
 

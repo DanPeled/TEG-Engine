@@ -37,6 +37,7 @@ void Object::Destroy()
 	}
 	system("cls");
 }
+
 Object::~Object() {}
 
 Object Object::GetObjectWithID(unsigned int ID)
@@ -57,6 +58,7 @@ Object Object::GetObjectWithID(unsigned int ID)
 		return Object(Vector2(0, 0));
 	}
 }
+
 std::vector<std::reference_wrapper<Object>> Object::GetChildren() const
 {
 	std::vector<std::reference_wrapper<Object>> result;

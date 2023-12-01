@@ -22,9 +22,9 @@ void Engine::UpdateLoop()
 	{
 		ticks += 1;
 		frames += 1;
-		Engine::PrintScreen();
+		Engine::RenderObjects();
 		game.Update();
-		this_thread::sleep_for(chrono::milliseconds(22));
+		this_thread::sleep_for(chrono::milliseconds(sleepTime));
 	}
 	OnStop();
 }
@@ -42,7 +42,7 @@ void Engine::OnStop()
 	Input::Cleanup();
 }
 
-void Engine::PrintScreen()
+void Engine::RenderObjects()
 {
     system("cls");
     std::size_t vectorLength = Object::objects.size();
@@ -78,7 +78,7 @@ double Engine::CalculateFPS()
 	duration<double> timeElapsed = duration_cast<duration<double>>(currentTime - lastTime);
 
 	// Check if one second has passed
-	if (timeElapsed.count() >= 1.0)
+	if (timeElapsed.count() >= 0.1)
 	{
 		double fps = frames / timeElapsed.count();
 
@@ -155,3 +155,4 @@ high_resolution_clock::time_point Engine::lastTime;
 int Engine::ticks = 0;
 int Engine::frames = 0;
 double Engine::lastFPS = 0;
+unsigned int Engine::sleepTime = 18;
