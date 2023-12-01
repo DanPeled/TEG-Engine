@@ -2,13 +2,10 @@
 #include <thread>
 #include "Engine.h"
 #include "../Game/Game.h"
-int Engine::ticks = 0;
-int Engine::frames = 0;
-high_resolution_clock::time_point Engine::lastTime;
-double Engine::lastFPS = 0;
+#include <fstream>
+
 Game game;
-std::vector<std::reference_wrapper<TEG::Object>> TEG::Object::objects = {};
-std::vector<Log> Engine::logs;
+
 void Engine::Init(Game game_)
 {
 	logs = {};
@@ -80,6 +77,51 @@ void Engine::LogOut(LogType type, std::string content)
 	Log l;
 	l.type = type;
 	l.content = content;
+	LogOut(l);
+}
+
+void Engine::LogOut(Log l)
+{
+	std::string typePrefix = "";
+	switch (l.type)
+	{
+	case Warning:
+	{
+		typePrefix = "Warning";
+		break;
+	}
+	case Error:
+	{
+		typePrefix = "Error";
+		break;
+	}
+	case None:
+	{
+		break;
+	}
+	case Debug:
+	{
+		typePrefix = "Debug";
+		break;
+	}
+	};
+	std::ofstream file("errorLogs.txt", std::ios_base::app);
+
+	if (!file.is_open())
+	{
+		std::cerr << "Error opening logs.txt for writing" << std::endl;
+		return;
+	}
+
+	auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	std::string timestamp = std::ctime(&now);
+
+	// Remove newline character from the timestamp
+	timestamp.pop_back();
+
+	file << timestamp << " " << typePrefix << ": " << l.content << std::endl;
+	file.close();
+
 	logs.push_back(l);
 }
 
@@ -87,3 +129,9 @@ std::string Engine::screen = "";
 bool Engine::RUNNING = true;
 CONSOLE_SCREEN_BUFFER_INFO Engine::csbi = {};
 std::mutex Engine::screenMutex;
+std::vector<std::reference_wrapper<TEG::Object>> TEG::Object::objects = {};
+std::vector<Log> Engine::logs;
+high_resolution_clock::time_point Engine::lastTime;
+int Engine::ticks = 0;
+int Engine::frames = 0;
+double Engine::lastFPS = 0;

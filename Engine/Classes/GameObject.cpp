@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include <iostream>
 #include <algorithm>
-
+#include "../Engine.h"
 using namespace TEG;
 
 Vector2 defaultVector(0, 0);
@@ -30,7 +30,9 @@ void GameObject::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 
     if (it == Object::objects.end())
     {
-        std::cerr << "Error: 'this' not found in objects vector." << std::endl;
+        std::string errorMsg = "Error: 'this' not found in objects vector.";
+        std::cerr << errorMsg << std::endl;
+        Engine::LogOut(LogType::Error, errorMsg);
         return;
     }
 

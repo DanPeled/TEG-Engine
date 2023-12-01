@@ -33,7 +33,7 @@ namespace TEG
 		static void Stop();
 		static double CalculateFPS();
 		static void LogOut(LogType type, std::string content);
-
+		static void LogOut(Log l);
 	private:
 		static void OnStop();
 		static std::string screen;
