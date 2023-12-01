@@ -16,6 +16,8 @@
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
+#include <string>
+
 using namespace TEG;
 using namespace std;
 using namespace std::chrono;
@@ -30,6 +32,7 @@ namespace TEG
 		static void PrintScreen();
 		static void Stop();
 		static double CalculateFPS();
+		static void LogOut(LogType type, std::string content);
 
 	private:
 		static void OnStop();
@@ -41,7 +44,21 @@ namespace TEG
 		static int frames;
 		static double lastFPS;
 		static high_resolution_clock::time_point lastTime;
+		static vector<Log> logs;
 	};
+	enum LogType
+	{
+		None,
+		Warning,
+		Error,
+		Debug
+	};
+	struct Log
+	{
+		LogType type;
+		std::string content;
+	};
+
 }
 
 #endif

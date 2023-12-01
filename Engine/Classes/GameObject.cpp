@@ -87,4 +87,3 @@ void GameObject::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
     WriteConsoleOutput(hConsole, charBuffer.data(), {static_cast<SHORT>(width), static_cast<SHORT>(height)}, {0, 0}, &rect);
 }
 
-std::vector<std::reference_wrapper<TEG::Object>> TEG::Object::objects = {};

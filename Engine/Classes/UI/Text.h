@@ -14,11 +14,14 @@ namespace TEG
         {
         public:
             std::string text;
-            WORD color; // Use WORD for console attributes
+            WORD color; // WORD for console attributes
+
             Text(Vector2 position_, std::string text_);
             Text(Vector2 globalPosition, std::string text_, WORD color_);
             Text();
+
             void Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const;
+
             static Text *Instantiate(Vector2 pos, std::string text);
             static Text *Instantiate(Vector2 pos, std::string text, WORD color);
 

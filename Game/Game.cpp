@@ -48,7 +48,7 @@ void Game::Update()
 			}
 		}
 	}
-
+	
 	myGameObject->SetPos(myGameObject->GetGlobalPosition() + Vector2(1, 0));
 	std::string text = "- " + std::to_string(myGameObject->GetID()) + "\n" + std::to_string(myGameObject2->GetParentOffset().x) +
 					   " " + std::to_string(myGameObject2->GetParentOffset().y) + "\n";

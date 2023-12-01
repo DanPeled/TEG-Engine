@@ -1,5 +1,8 @@
 #include "Input.h"
 #include <cstdio>
+#include <vector>
+#include <cstring>
+#include <variant>
 
 HANDLE Input::hStdin;
 DWORD Input::fdwSaveOldMode;

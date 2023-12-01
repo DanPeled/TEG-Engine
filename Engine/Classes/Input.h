@@ -39,7 +39,6 @@ public:
     static HANDLE hStdin;
     static DWORD fdwSaveOldMode;
     static DWORD fdwMode;
-
     static void Initialize();
     static void Cleanup();
     static std::vector<InputEvent> GetInputEvents();
