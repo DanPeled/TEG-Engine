@@ -150,7 +150,7 @@ The ConsoleAttributes class holds data for coloring text and objects in the term
 
 ---
 # [Component](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/Component.h)
-The `Component` class is a abstract class that is derived to make object components (Explained in `Object` class documentation), that have a few basic functions: 
+The `Component` class is a abstract class that is derived to make object components (Explained in [`Object`](https://github.com/DanPeled/TEG-Engine#object-components) class documentation), that have a few basic functions: 
 
 `Start()` - Called when adding the component onto an object
 
