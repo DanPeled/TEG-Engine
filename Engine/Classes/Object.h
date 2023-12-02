@@ -13,7 +13,7 @@
 #include <set>
 #include "Component.h"
 #include <unordered_set>
-
+#include <exception>
 namespace TEG
 {
 	// Class for handling console attributes
@@ -82,9 +82,16 @@ namespace TEG
 		template <typename T>
 		void AddComponent(std::shared_ptr<T> addedComp)
 		{
-			components.push_back(addedComp);
-			Component &component = *addedComp;
-			component.Start();
+			try
+			{
+				Component &component = *addedComp;
+				components.push_back(addedComp);
+				component.Start();
+			}
+			catch (std::exception e)
+			{
+				// Engine::LogOut(LogType::Error, "Something went wrong in AddComponent function");
+			}
 		}
 
 		const std::vector<std::shared_ptr<Component>> GetComponents() const

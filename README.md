@@ -120,6 +120,31 @@ std::cout << parent->GetChildren()[0].get().GetID(); // Prints out the ID of the
 ```
 
 ---
+### Object Components 
+Object components are used to add more functionality to a object, outside of the `Game` class.
+#### Adding Components
+Using the `AddComponent(shared_ptr<Object>)`, you can add instances of classes that derive from the Component class. Here's an example:
+```cpp
+// component derived class
+class ExampleComp : public Component
+{
+    void Start() override 
+    {
+      cout << "Start() Ran";
+    }
+}
+
+// in the Game derived class: 
+GameObject *obj = Instantiate(args...);
+obj->AddComponent(make_shared<ExampleComp>());
+
+```
+And then the `Start()` function will be called after it has been added.
+
+#### Getting Components
+You can get a `vector` of `shared pointers` to the components using the `GetComponents()` function.
+
+---
 ## Console Attributes Class
 The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BLACK, RED, GREEN.
 
