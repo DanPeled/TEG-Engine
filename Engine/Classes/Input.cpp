@@ -73,10 +73,12 @@ void Input::SimulateKeyPress(char key, bool shift, bool ctrl, bool alt)
 	DWORD cNumWritten;
 	WriteConsoleInput(hStdin, irInBuf, 2, &cNumWritten);
 }
+
 void Input::SimulateKeyPress(char key)
 {
 	SimulateKeyPress(key, false, false, false);
 }
+
 INPUT_RECORD Input::CreateKeyEvent(char key, bool keyDown, bool shift, bool ctrl, bool alt)
 {
 	INPUT_RECORD ir;

@@ -45,10 +45,35 @@ void Engine::OnStop()
 void Engine::RenderObjects()
 {
 	system("cls");
-	std::size_t vectorLength = Object::objects.size();
-	const std::size_t numThreads = std::thread::hardware_concurrency(); // Get the number of available threads
+	const std::size_t vectorLength = Object::objects.size();
+	const std::size_t numThreads = std::thread::hardware_concurrency();
 
 	std::vector<std::future<void>> futures;
+
+	// Function to process a range of objects in parallel
+	auto processRange = [](std::size_t start, std::size_t end)
+	{
+		for (std::size_t j = start; j < end; ++j)
+		{
+			auto &currentObject = Object::objects[j].get();
+
+			if (currentObject.GetEnabled())
+			{
+				currentObject.Render(csbi);
+
+				// Get components and run the Update function on each enabled one
+				const auto &components = currentObject.GetComponents();
+				for (const auto &componentPtr : components)
+				{
+					Component &component = *componentPtr;
+					if (component.GetEnabled())
+					{
+						component.Update();
+					}
+				}
+			}
+		}
+	};
 
 	// Divide the rendering work among multiple threads
 	for (std::size_t i = 0; i < numThreads; ++i)
@@ -56,13 +81,8 @@ void Engine::RenderObjects()
 		std::size_t start = i * vectorLength / numThreads;
 		std::size_t end = (i + 1) * vectorLength / numThreads;
 
-		futures.emplace_back(std::async(std::launch::async, [start, end]()
-										{
-            for (std::size_t j = start; j < end; ++j)
-            {
-                if (Object::objects[j].get().GetEnabled())
-                    Object::objects[j].get().Render(csbi);
-            } }));
+		futures.emplace_back(std::async(std::launch::async, [=]()
+										{ processRange(start, end); }));
 	}
 
 	// Wait for all threads to finish
@@ -125,7 +145,7 @@ void Engine::LogOut(Log l)
 		break;
 	}
 	};
-	std::ofstream file("errorLogs.txt", std::ios_base::app);
+	std::ofstream file("logs.txt", std::ios_base::app);
 
 	if (!file.is_open())
 	{

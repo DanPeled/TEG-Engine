@@ -12,6 +12,8 @@
 #include <string>
 #include <set>
 #include "Component.h"
+#include <unordered_set>
+
 namespace TEG
 {
 	// Class for handling console attributes
@@ -42,6 +44,7 @@ namespace TEG
 		{
 			this->SetEnabled(true);
 			this->ID = ObtainID(this);
+			this->components = {};
 		}
 
 		// Destructor
@@ -75,10 +78,19 @@ namespace TEG
 
 		// Destroy the object and its children
 		void Destroy();
-		// void AddComponent(Component comp)
-		// {
-		// 	components.insert(comp);
-		// }
+
+		template <typename T>
+		void AddComponent(std::shared_ptr<T> addedComp)
+		{
+			components.push_back(addedComp);
+			Component &component = *addedComp;
+			component.Start();
+		}
+
+		const std::vector<std::shared_ptr<Component>> GetComponents() const
+		{
+			return components;
+		}
 		// Destroy only the children of the object
 		void DestroyChildren()
 		{
@@ -133,12 +145,12 @@ namespace TEG
 		static std::vector<std::reference_wrapper<Object>> objects;
 
 	private:
-		Vector2 parentOffset;				 // Offset from the parent object
-		Vector2 globalPosition;				 // Global position of the object
-		std::set<unsigned int> children;	 // Set of child IDs
-		// std::set<Component> components = {}; // Set to store Object components
-		std::uintptr_t ID;					 // Unique ID of the object
-		bool enabled;						 // Flag indicating if the object is enabled
+		Vector2 parentOffset;								// Offset from the parent object
+		Vector2 globalPosition;								// Global position of the object
+		std::set<unsigned int> children;					// Set of child IDs
+		std::vector<std::shared_ptr<Component>> components; // Vector to store Object components
+		std::uintptr_t ID;									// Unique ID of the object
+		bool enabled;										// Flag indicating if the object is enabled
 
 		// Obtain a unique ID for an object based on its memory address
 		unsigned int ObtainID(Object *obj)

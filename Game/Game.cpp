@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "TestComp.h"
 using namespace TEG;
 using namespace std::chrono;
 
@@ -14,6 +15,7 @@ void Game::Start()
 	);
 	fpsText = UI::Text::Instantiate(startingPosition - Vector2(0, 2), "FPS: 0", ConsoleAttributes().BLUE);
 	parentObj->AddChild(text1);
+	parentObj->AddComponent(std::make_shared<TestComp>());
 }
 
 void Game::Update()
@@ -56,7 +58,7 @@ void Game::Update()
 	parentObj->SetPos(parentObj->GetGlobalPosition() + Vector2(1, 0));
 	std::string text = "- " + std::to_string(parentObj->GetID()) + "\n" + std::to_string(text1->GetParentOffset().x) +
 					   " " + std::to_string(text1->GetParentOffset().y) + "\n";
-	fpsText->text = "FPS: " + std::to_string(Engine::CalculateFPS()) + "\n" + "Sleep Time: " + std::to_string(Engine::sleepTime);
+	fpsText->text = "FPS: " + std::to_string(Engine::CalculateFPS()) + "\n" + "Sleep Time: " + std::to_string(Engine::sleepTime) + "\n" + "Comps : " + std::to_string(parentObj->GetComponents().size());
 	for (Object &child : parentObj->GetChildren())
 	{
 		text += "\tL " + std::to_string(child.GetID()) + "\n";
