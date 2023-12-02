@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code">
-<div style="font-family: 'Sofia', sans-serif">
+<div style="font-family: 'Fira Code', sans-serif">
 
 <div align="center">
 
