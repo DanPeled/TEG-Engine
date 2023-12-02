@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cascadia+Code">
 
-<div style="font-family: 'Fira Code', 'Cascadia Code'; font-variant-ligatures: common-ligatures;">
+<span style="font-family: 'Fira Code', 'Cascadia Code'; font-variant-ligatures: common-ligatures;">
 
 <div align="center">
 
@@ -203,4 +203,4 @@ The `Render()` function takes care of rendering the game object on the screen, a
 
 ---
 
-</div>
+</span>
