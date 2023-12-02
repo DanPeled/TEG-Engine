@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code">
+<div style="font-family: 'Sofia', sans-serif">
 
 <div align="center">
 
@@ -198,3 +200,5 @@ The `Render()` function takes care of rendering the game object on the screen, a
 1. Renders the char buffer on the screen.
 
 ---
+
+</div>
