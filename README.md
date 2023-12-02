@@ -21,7 +21,7 @@ or
 
 ---
 # Documentation :
-# [Engine.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Engine.cpp)
+# [Engine Class](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Engine.cpp)
 > <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span> </br>
 
 Sample main file:
@@ -68,7 +68,7 @@ The `Engine::OnStop()` function handles stopping the engine, and goes through th
 
 ---
 
-# [Object.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/Object.h)
+# [Object](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/Object.h)
 The Object class is an abstract class that behaves as a template for classes such as the `GameObject` class, and has some basic function that are the same for all the instances. </br></br>
 **<u>Take in notice:</u>** The Object class should **NOT** be used be used by itself, and instead be used by classes that derive from it. 
 
@@ -149,8 +149,17 @@ You can get a `vector` of `shared pointers` to the components using the `GetComp
 The ConsoleAttributes class holds data for coloring text and objects in the terminal, with variables such as BLACK, RED, GREEN.
 
 ---
+# [Component](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/Component.h)
+The `Component` class is a abstract class that is derived to make object components (Explained in `Object` class documentation), that have a few basic functions: 
 
-# [GameObject.cpp](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/GameObject.h)
+`Start()` - Called when adding the component onto an object
+
+`Update()` - Called every frame
+
+`Stop()` - Called after the component / object has been disabled 
+
+---
+# [GameObject](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/GameObject.h)
 The GameObject class is a class for basic rectangle-like shape rendering, which will probably have more shapes to it in the future.
 
 ## Instantiation
