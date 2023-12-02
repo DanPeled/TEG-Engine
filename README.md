@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code">
-<div style="font-family: 'Fira Code', sans-serif">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cascadia+Code">
+
+<div style="font-family: 'Fira Code', 'Cascadia Code'; font-variant-ligatures: common-ligatures;">
 
 <div align="center">
 
