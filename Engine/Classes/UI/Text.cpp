@@ -26,6 +26,7 @@ UI::Text *UI::Text::Instantiate(Vector2 pos, std::string text)
 {
 	return Instantiate(pos, text, ConsoleAttributes().GREEN | ConsoleAttributes().BOLD);
 }
+
 void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 {
 	// Retrieve object properties
@@ -34,44 +35,50 @@ void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 	// Create a HANDLE to the console output buffer
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+	// Set the cursor position
+	COORD cursorPos = {static_cast<SHORT>(startPos.x), std::max<SHORT>(0, static_cast<SHORT>(startPos.y))};
+
+	// Hide the cursor
+	CONSOLE_CURSOR_INFO cursorInfo;
+	GetConsoleCursorInfo(hConsole, &cursorInfo);
+	cursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(hConsole, &cursorInfo);
+
+	// Process special characters in the entire text
+	std::string processedText = ProcessSpecialCharacters(text);
+
 	// Split the text into lines based on "\n" character
 	std::vector<std::string> lines;
-	std::istringstream iss(text);
+	std::istringstream iss(processedText);
 	std::string line;
 	while (std::getline(iss, line, '\n'))
 	{
 		lines.push_back(line);
 	}
 
-	// Set the cursor globalPosition
-	COORD cursorPos = {static_cast<SHORT>(startPos.x), std::max<SHORT>(0, static_cast<SHORT>(startPos.y))};
+	// Set the buffer size and region for writing to the console
+	COORD bufferCoord = {0, 0};
 
-	// Render each line separately
 	for (const auto &currentLine : lines)
 	{
-		// Handle special characters like '\t'
-		std::string processedLine = ProcessSpecialCharacters(currentLine);
-
 		// Create a CHAR_INFO buffer to hold character and attributes
-		std::vector<CHAR_INFO> charBuffer(processedLine.size(), {' ', color});
+		std::vector<CHAR_INFO> charBuffer(currentLine.size(), {' ', color});
 
 		// Copy text to CHAR_INFO buffer
-		for (size_t i = 0; i < processedLine.size(); ++i)
+		for (size_t i = 0; i < currentLine.size(); ++i)
 		{
-			charBuffer[i].Char.AsciiChar = processedLine[i];
+			charBuffer[i].Char.AsciiChar = currentLine[i];
 		}
 
-		// Write the CHAR_INFO buffer to the console
-		COORD bufferSize = {static_cast<SHORT>(processedLine.size()), 1};
-		COORD bufferCoord = {0, 0};
-
-		// Explicitly cast values to SHORT to address narrowing conversion warnings
+		// Set the buffer size and region for writing to the console
+		COORD bufferSize = {static_cast<SHORT>(currentLine.size()), 1};
 		SMALL_RECT writeRegion = {
 			static_cast<SHORT>(cursorPos.X),
 			static_cast<SHORT>(cursorPos.Y),
 			static_cast<SHORT>(cursorPos.X + bufferSize.X - 1),
 			static_cast<SHORT>(cursorPos.Y + bufferSize.Y - 1)};
 
+		// Write the CHAR_INFO buffer to the console
 		if (!WriteConsoleOutputA(hConsole, charBuffer.data(), bufferSize, bufferCoord, &writeRegion))
 		{
 			// ... (error handling code)
@@ -80,6 +87,10 @@ void UI::Text::Render(const CONSOLE_SCREEN_BUFFER_INFO &csbi) const
 		// Move the cursor to the next line
 		cursorPos.Y++;
 	}
+
+	// Show the cursor again after rendering
+	cursorInfo.bVisible = TRUE;
+	SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
 
 std::string UI::Text::ProcessSpecialCharacters(const std::string &input) const

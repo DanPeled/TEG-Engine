@@ -4,23 +4,22 @@ using namespace TEG;
 using namespace std::chrono;
 
 Vector2 startingPosition(12, 4);
-GameObject *parentObj;
+UI::Text *parentObj;
 UI::Text *text1;
 UI::Text *fpsText;
 void Game::Start()
 {
-	parentObj = GameObject::Instantiate(startingPosition, 5, 5, '#', false);
+	parentObj = UI::Text::Instantiate(startingPosition, "####", ConsoleAttributes().YELLOW);
 	text1 = UI::Text::Instantiate(startingPosition - Vector2(0, 1), "cheese", ConsoleAttributes().GREEN /*, +[]()
 											{ cout << "Test"; }*/
 	);
 	fpsText = UI::Text::Instantiate(startingPosition - Vector2(0, 2), "FPS: 0", ConsoleAttributes().BLUE);
 	parentObj->AddChild(text1);
-	parentObj->AddComponent(std::make_shared<TestComp>());
+	// parentObj->AddComponent(std::make_shared<TestComp>());
 }
 
 void Game::Update()
 {
-
 	// Gather input events
 	std::vector<InputEvent> inputEvents = Input::GetInputEvents();
 

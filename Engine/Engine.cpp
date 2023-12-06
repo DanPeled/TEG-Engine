@@ -4,6 +4,8 @@
 #include "../Game/Game.h"
 #include <fstream>
 #include <future>
+#include "Classes/Component.h"
+
 Game game;
 
 void Engine::Init(Game game_)
@@ -20,13 +22,18 @@ void Engine::UpdateLoop()
 {
 	while (Engine::RUNNING)
 	{
-		ticks += 1;
-		frames += 1;
-		Engine::RenderObjects();
-		game.Update();
-		this_thread::sleep_for(chrono::milliseconds(sleepTime));
+		Tick();
 	}
 	OnStop();
+}
+
+void Engine::Tick()
+{
+	ticks += 1;
+	frames += 1;
+	Engine::RenderObjects();
+	game.Update();
+	this_thread::sleep_for(chrono::milliseconds(sleepTime));
 }
 
 void Engine::Stop()
@@ -45,6 +52,7 @@ void Engine::OnStop()
 void Engine::RenderObjects()
 {
 	system("cls");
+
 	const std::size_t vectorLength = Object::objects.size();
 	const std::size_t numThreads = std::thread::hardware_concurrency();
 
@@ -53,12 +61,20 @@ void Engine::RenderObjects()
 	// Function to process a range of objects in parallel
 	auto processRange = [](std::size_t start, std::size_t end)
 	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 		for (std::size_t j = start; j < end; ++j)
 		{
 			auto &currentObject = Object::objects[j].get();
 
 			if (currentObject.GetEnabled())
 			{
+				// Move the cursor to the correct position before rendering
+				COORD cursorPos = {static_cast<SHORT>(currentObject.GetGlobalPosition().x),
+								   static_cast<SHORT>(std::max<SHORT>(0, currentObject.GetGlobalPosition().y))};
+				SetConsoleCursorPosition(hConsole, cursorPos);
+
+				// Render the object directly to the console
 				currentObject.Render(csbi);
 
 				// Get components and run the Update function on each enabled one

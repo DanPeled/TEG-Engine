@@ -35,7 +35,8 @@ namespace TEG
 		static void LogOut(LogType type, std::string content);
 		static void LogOut(Log l);
 		static unsigned int sleepTime;
-
+		static void Tick();
+		static void UpdateCursorPosition(const std::vector<std::pair<COORD, std::string>>& objectBuffer);
 	private:
 		static void OnStop();
 		static std::string screen;

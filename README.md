@@ -79,8 +79,10 @@ The Object class is an abstract class that behaves as a template for classes suc
 ## Main Class
 ### Constructor
 The constructor recives the initial position of the Object instance, saves it into memory, and assigns an ID to the object according to it's position in memory. The constructor shouldn't be used by itself most of the time, instead you might use the `Instantiate()`function, provided by classes such as `GameObject` & `Text`.
+
 ### Object Render List
 Inside of the `Object` class, you can find the `objects` refrence wrapper vector, that automatically stores refrences to all the objects that were created using `Instantiate()` function, and each frame of the engine calls the render function of each one of the refrences.
+
 ### Enabling & Disabling An Instance
 The `SetEnabled(bool state)` function sets the state (Enabled / Disabled) of the object its being called on. For an example in this code snippet: 
 ```cpp
@@ -90,6 +92,7 @@ obj->SetEnabled(false);
 it disables the object & it's children from being rendered on the screen.
 
 ---
+
 ### Child-Parent Relations
 Child-Parent relations let you accomplish stuff like disabling multiple objects at the same time, or moving objects in-sync.
 
@@ -101,6 +104,7 @@ GameObject *parent = GameObject::Instantiate(args...);
 GameObject *child = GameObject::Instantiate(args...);
 parent->AddChild(child);
 ```
+
 #### Position-Relation
 Every time you will call the `SetPos()` function on a object, it will trigger the function also for all its children, and make them move aswell, according to their initial offset from their parent.
 
@@ -124,8 +128,10 @@ std::cout << parent->GetChildren()[0].get().GetID(); // Prints out the ID of the
 ```
 
 ---
+
 ### Object Components 
 Object components are used to add more functionality to a object, outside of the `Game` class.
+
 #### Adding Components
 Using the `AddComponent(shared_ptr<Object>)`, you can add instances of classes that derive from the Component class. Here's an example:
 ```cpp
