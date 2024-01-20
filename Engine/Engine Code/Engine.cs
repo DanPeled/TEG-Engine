@@ -102,6 +102,7 @@ namespace TEG.TEGEngine
                 Entity? entity = reference.Value ?? null;
                 SetCursorPosition(entity?.GetComponent<Transform>()?.Position ?? new Vec2(0, 0));
                 Console.WriteLine(entity?.ID);
+                entity?.Update();
             }
         }
 

@@ -12,5 +12,9 @@ namespace TEG.Classes
         {
             this.entity = entity;
         }
+        public EntityComponent()
+        {
+
+        }
     }
 }

@@ -13,14 +13,12 @@ namespace MainCode
             Console.WriteLine(vec);
             Console.WriteLine(-vec);
             entity = new(vec);
-            Engine.Instantiate(entity);
-            entity = new(vec + new Vec2(0, 1));
+            entity.AddComponent<CustomComp>();
             Engine.Instantiate(entity);
         }
         public override void Update()
         {
-            vec += new Vec2(1, 0);
-            entity.GetComponent<Transform>().Position += new Vec2(1, 0);
+
 
         }
         public override void OnStop()
