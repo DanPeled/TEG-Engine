@@ -2,8 +2,18 @@ namespace TEG.Classes
 {
     public abstract class EntityComponent
     {
-        private readonly bool enabled = true;
-        public bool Enabled => enabled;
+        private bool enabled = true;
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                enabled = value;
+            }
+        }
         public Entity? entity;
         public abstract void Start();
         public abstract void Update();

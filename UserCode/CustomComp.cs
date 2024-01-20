@@ -1,14 +1,23 @@
 using TEG.Classes;
 using TEG.Classes.BasicComponents;
-
-public class CustomComp : EntityComponent
+using TEG.TEGEngine;
+namespace MainCode
 {
-    public override void Start()
+    public class CustomComp : EntityComponent
     {
-    }
+        public override void Start()
+        {
+        }
 
-    public override void Update()
-    {
-        this.entity.GetComponent<Transform>().Position += new Vec2(1, 0);
+        public override void Update()
+        {
+            int maxWidth = Console.WindowWidth - 1; // 0-based index
+            int maxHeight = Console.WindowHeight - 1; // 0-based index
+            if (entity.transform.GlobalPosition.x >= maxWidth)
+            {
+                entity.transform.GlobalPosition = new Vec2(1, entity.transform.GlobalPosition.y);
+            }
+            entity.transform.GlobalPosition += new Vec2(1, 0);
+        }
     }
 }

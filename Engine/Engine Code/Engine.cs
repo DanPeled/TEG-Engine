@@ -1,3 +1,4 @@
+using System.Text;
 using TEG.Classes;
 using TEG.Classes.BasicComponents;
 using TEG.Util;
@@ -10,6 +11,7 @@ namespace TEG.TEGEngine
     public class Engine
     {
         #region Class Vars
+        private static StringBuilder outputBuffer = new StringBuilder();
 
         /// <summary>
         /// The current game associated with the engine.
@@ -51,6 +53,7 @@ namespace TEG.TEGEngine
         /// <param name="game_">The game to be associated with the engine.</param>
         public static void Init(Game game_)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             entities = new List<Ref<Entity>>();
             Console.WriteLine("INITIALIZING ENGINE");
             game = game_;
@@ -100,11 +103,32 @@ namespace TEG.TEGEngine
             foreach (Ref<Entity> reference in entities)
             {
                 Entity? entity = reference.Value ?? null;
-                SetCursorPosition(entity?.GetComponent<Transform>()?.Position ?? new Vec2(0, 0));
-                Console.WriteLine(entity?.ID);
+                Render(entity);
                 entity?.Update();
             }
         }
+        public static void Render(Entity entity)
+        {
+            if (entity == null || entity.sprite == null)
+            {
+                return;
+            }
+
+
+            string[] lines = entity.sprite.Split("\n");
+
+            int x = entity.transform.GlobalPosition.x;
+            int y = entity.transform.GlobalPosition.y;
+
+            foreach (string line in lines)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.Write(line);
+                y++;
+            }
+        }
+
+
 
         /// <summary>
         /// Stops the game engine.

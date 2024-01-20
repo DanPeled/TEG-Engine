@@ -13,7 +13,11 @@ namespace MainCode
             Console.WriteLine(vec);
             Console.WriteLine(-vec);
             entity = new(vec);
+            entity.sprite = "######\n######\n######\n######";
             entity.AddComponent<CustomComp>();
+            Engine.Instantiate(entity);
+            entity = new(new Vec2(0, 4));
+            entity.sprite = "/////////\n/////////\n/////////\n/////////";
             Engine.Instantiate(entity);
         }
         public override void Update()

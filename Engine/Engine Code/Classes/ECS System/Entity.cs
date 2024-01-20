@@ -13,6 +13,9 @@ namespace TEG.Classes
     {
         private bool enabled = true;
         private List<EntityComponent> components;
+        private List<uint> childrenIDs;
+        public Transform transform { get; private set; }
+        public string sprite = "";
 
         /// <summary>
         /// Gets or sets the unique identifier of the entity.
@@ -36,8 +39,10 @@ namespace TEG.Classes
         {
             // Initialize components list
             components = new List<EntityComponent>();
+            childrenIDs = new List<uint>();
             ID = Engine.ObtainID(this);
-            AddComponent<Transform>().Position = initialPos;
+            transform = AddComponent<Transform>();
+            transform.GlobalPosition = initialPos;
         }
 
         /// <summary>
@@ -68,7 +73,6 @@ namespace TEG.Classes
             T? res = components.FirstOrDefault(c => c.GetType() == typeof(T)) as T;
             return res;
         }
-
         /// <summary>
         /// Updates all components attached to the entity.
         /// </summary>
@@ -78,6 +82,19 @@ namespace TEG.Classes
             {
                 c?.Update();
             }
+        }
+        public Entity[] GetChildren()
+        {
+            List<Entity> children = new List<Entity>();
+            foreach (uint ID in childrenIDs)
+            {
+                children.Add(Engine.GetEntityWithID(ID)?.Value ?? new Entity(new(0, 0)));
+            }
+            return children.ToArray();
+        }
+        public int GetChildCount()
+        {
+            return childrenIDs.Count;
         }
     }
 }
