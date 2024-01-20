@@ -29,14 +29,7 @@ namespace TEG.Classes.BasicComponents
             }
         }
         public Vec2 LocalPosition => (ParentOffset - GlobalPosition);
-        public override void Start()
-        {
-        }
-
-        public override void Update()
-        {
-        }
-        private Vec2 CalculateParentChildOffset(Transform child)
+        public Vec2 CalculateParentChildOffset(Transform child)
         {
             return (GlobalPosition ?? new Vec2(0, 0)) - (child.GlobalPosition ?? new Vec2(0, 0));
         }

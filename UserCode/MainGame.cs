@@ -7,18 +7,18 @@ namespace MainCode
     public class MainGame : Game
     {
         Vec2 vec = new(1, 3);
-        Entity? entity;
+        Entity? entity, entity2;
         public override void Start()
         {
             Console.WriteLine(vec);
             Console.WriteLine(-vec);
             entity = new(vec);
-            entity.sprite = "######\n######\n######\n######";
+            entity.GetComponent<Renderer>().sprite = "------------\n|---test---|\n------------\n";
             entity.AddComponent<CustomComp>();
             Engine.Instantiate(entity);
-            entity = new(new Vec2(0, 4));
-            entity.sprite = "/////////\n/////////\n/////////\n/////////";
-            Engine.Instantiate(entity);
+            entity2 = new(new Vec2(0, 6));
+            entity2.GetComponent<Renderer>().sprite = "/////////\n/////////\n/////////\n/////////";
+            Engine.Instantiate(entity2);
         }
         public override void Update()
         {

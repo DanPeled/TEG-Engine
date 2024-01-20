@@ -12,12 +12,15 @@ namespace TEG.Classes
             set
             {
                 enabled = value;
+                if (!enabled) Stop();
+                else Awake();
             }
         }
         public Entity? entity;
-        public abstract void Start();
-        public abstract void Update();
-        public void Stop() { }
+        public virtual void Start() { }
+        public virtual void Awake() { }
+        public virtual void Update() { }
+        public virtual void Stop() { }
         public void Attach(Entity entity)
         {
             this.entity = entity;

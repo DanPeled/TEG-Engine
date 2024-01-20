@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Text;
 using TEG.Classes;
 using TEG.Classes.BasicComponents;
+using TEG.Classes.Input;
 using TEG.Util;
 
 namespace TEG.TEGEngine
@@ -11,6 +14,10 @@ namespace TEG.TEGEngine
     public class Engine
     {
         #region Class Vars
+
+        /// <summary>
+        /// Output buffer for logging.
+        /// </summary>
         private static StringBuilder outputBuffer = new StringBuilder();
 
         /// <summary>
@@ -51,16 +58,28 @@ namespace TEG.TEGEngine
         /// Initializes the game engine.
         /// </summary>
         /// <param name="game_">The game to be associated with the engine.</param>
-        public static void Init(Game game_)
+        /// <param name="bgColor">The background color for the console.</param>
+        public static void Init(Game game_, ConsoleColor bgColor)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.BackgroundColor = bgColor;
             entities = new List<Ref<Entity>>();
             Console.WriteLine("INITIALIZING ENGINE");
             game = game_;
             RUNNING = true;
+            Console.CursorVisible = false;
             Console.WriteLine("FINISHED INITIALIZING ENGINE");
             Console.Clear();
             game.Start();
+        }
+
+        /// <summary>
+        /// Initializes the game engine with a default background color (Black).
+        /// </summary>
+        /// <param name="game_">The game to be associated with the engine.</param>
+        public static void Init(Game game_)
+        {
+            Init(game_, ConsoleColor.Black);
         }
 
         /// <summary>
@@ -71,8 +90,7 @@ namespace TEG.TEGEngine
             long lastTickTime = DateTime.Now.Ticks;
             int frameCounter = 0;
 
-            // Inside your main loop or wherever appropriate
-            while (RUNNING)
+            while (true)
             {
                 long currentTime = DateTime.Now.Ticks;
                 float elapsedMilliseconds = (currentTime - lastTickTime) / TimeSpan.TicksPerMillisecond;
@@ -84,10 +102,14 @@ namespace TEG.TEGEngine
                     lastTickTime = currentTime;
                     frameCounter++;
 
-                    if (frameCounter % targetFPS == 0) // Calculate FPS every 60 frames (adjust as needed)
+                    if (frameCounter % targetFPS == 0)
                     {
                         frames = 0;
                     }
+                }
+                if (!RUNNING)
+                {
+                    break;
                 }
             }
 
@@ -103,19 +125,26 @@ namespace TEG.TEGEngine
             foreach (Ref<Entity> reference in entities)
             {
                 Entity? entity = reference.Value ?? null;
-                Render(entity);
-                entity?.Update();
+                if (entity != null && entity.Enabled)
+                {
+                    Render(entity);
+                    entity?.Update();
+                }
             }
         }
+
+        /// <summary>
+        /// Renders a specific entity.
+        /// </summary>
+        /// <param name="entity">The entity to render.</param>
         public static void Render(Entity entity)
         {
-            if (entity == null || entity.sprite == null)
+            if (entity == null || entity.GetComponent<Renderer>().sprite == null)
             {
                 return;
             }
 
-
-            string[] lines = entity.sprite.Split("\n");
+            string[] lines = entity.GetComponent<Renderer>().sprite.Split("\n");
 
             int x = entity.transform.GlobalPosition.x;
             int y = entity.transform.GlobalPosition.y;
@@ -128,14 +157,15 @@ namespace TEG.TEGEngine
             }
         }
 
-
-
         /// <summary>
         /// Stops the game engine.
         /// </summary>
         public static void StopEngine()
         {
             RUNNING = false;
+            Console.Clear();
+            SetCursorPosition(new Vec2(0, 0));
+            Console.WriteLine("Stopping Engine");
         }
 
         /// <summary>
@@ -143,7 +173,7 @@ namespace TEG.TEGEngine
         /// </summary>
         private static void OnStop()
         {
-            // Implement any cleanup logic when the engine stops
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         /// <summary>
@@ -154,9 +184,14 @@ namespace TEG.TEGEngine
             frames += 1;
             RenderObjects();
             game?.Update();
+            Input.UpdateLoop();
         }
 
-        private static void SetCursorPosition(Vec2 vec)
+        /// <summary>
+        /// Sets the console cursor position.
+        /// </summary>
+        /// <param name="vec">The position vector.</param>
+        public static void SetCursorPosition(Vec2 vec)
         {
             Console.SetCursorPosition(vec.x, vec.y);
         }
@@ -202,6 +237,24 @@ namespace TEG.TEGEngine
         public static Ref<Entity>? GetEntityWithID(uint id)
         {
             return entities.FirstOrDefault(r => r.Value?.ID == id) ?? null;
+        }
+
+        /// <summary>
+        /// Destroys an entity by its ID.
+        /// </summary>
+        /// <param name="ID">The ID of the entity to destroy.</param>
+        public static void DestroyEntity(uint ID)
+        {
+            entities.Remove(GetEntityWithID(ID));
+        }
+
+        /// <summary>
+        /// Destroys an entity.
+        /// </summary>
+        /// <param name="entity">The entity to destroy.</param>
+        public static void DestroyEntity(Entity entity)
+        {
+            DestroyEntity(entity.ID);
         }
 
         #endregion

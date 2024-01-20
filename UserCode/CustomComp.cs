@@ -1,5 +1,6 @@
 using TEG.Classes;
 using TEG.Classes.BasicComponents;
+using TEG.Classes.Input;
 using TEG.TEGEngine;
 namespace MainCode
 {
@@ -17,7 +18,14 @@ namespace MainCode
             {
                 entity.transform.GlobalPosition = new Vec2(1, entity.transform.GlobalPosition.y);
             }
-            entity.transform.GlobalPosition += new Vec2(1, 0);
+            if (Input.IsKeyPressed(ConsoleKey.D))
+            {
+                entity.transform.GlobalPosition += new Vec2(1, 0);
+            }
+            else if (Input.IsKeyPressed(ConsoleKey.Q))
+            {
+                Engine.StopEngine();
+            }
         }
     }
 }

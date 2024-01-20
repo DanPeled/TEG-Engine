@@ -8,7 +8,7 @@ namespace MainCode
 
         public static void Main(string[] args)
         {
-            Engine.Init(game);
+            Engine.Init(game, ConsoleColor.Black);
             Engine.UpdateLoop();
         }
     }

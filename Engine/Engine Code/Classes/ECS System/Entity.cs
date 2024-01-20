@@ -15,7 +15,6 @@ namespace TEG.Classes
         private List<EntityComponent> components;
         private List<uint> childrenIDs;
         public Transform transform { get; private set; }
-        public string sprite = "";
 
         /// <summary>
         /// Gets or sets the unique identifier of the entity.
@@ -28,7 +27,14 @@ namespace TEG.Classes
         public bool Enabled
         {
             get { return enabled; }
-            set { enabled = value; }
+            set
+            {
+                enabled = value;
+                foreach (Entity child in GetChildren())
+                {
+                    child.Enabled = value;
+                }
+            }
         }
 
         /// <summary>
@@ -43,6 +49,7 @@ namespace TEG.Classes
             ID = Engine.ObtainID(this);
             transform = AddComponent<Transform>();
             transform.GlobalPosition = initialPos;
+            AddComponent<Renderer>();
         }
 
         /// <summary>
@@ -73,6 +80,26 @@ namespace TEG.Classes
             T? res = components.FirstOrDefault(c => c.GetType() == typeof(T)) as T;
             return res;
         }
+
+        /// <summary>
+        /// Removes a component of type <typeparamref name="T"/> from the entity.
+        /// </summary>
+        /// <typeparam name="T">The type of the component to remove.</typeparam>
+        public void RemoveComponent<T>() where T : EntityComponent
+        {
+            if (components.Count == 0)
+            {
+                return;
+            }
+            EntityComponent componentToRemove = components.FirstOrDefault(c => c.GetType() == typeof(T));
+
+            if (componentToRemove != null)
+            {
+                componentToRemove.Stop();
+                components.Remove(componentToRemove);
+            }
+        }
+
         /// <summary>
         /// Updates all components attached to the entity.
         /// </summary>
@@ -80,21 +107,54 @@ namespace TEG.Classes
         {
             foreach (EntityComponent c in components)
             {
-                c?.Update();
+                if (c.Enabled)
+                    c?.Update();
             }
         }
+
+        /// <summary>
+        /// Retrieves an array of child entities.
+        /// </summary>
+        /// <returns>An array of child entities.</returns>
         public Entity[] GetChildren()
         {
             List<Entity> children = new List<Entity>();
             foreach (uint ID in childrenIDs)
             {
-                children.Add(Engine.GetEntityWithID(ID)?.Value ?? new Entity(new(0, 0)));
+                children.Add(Engine.GetEntityWithID(ID)?.Value ?? new Entity(new Vec2(0, 0)));
             }
             return children.ToArray();
         }
+
+        /// <summary>
+        /// Gets the count of child entities.
+        /// </summary>
+        /// <returns>The count of child entities.</returns>
         public int GetChildCount()
         {
             return childrenIDs.Count;
+        }
+
+        /// <summary>
+        /// Adds a child entity to the current entity.
+        /// </summary>
+        /// <param name="child">The child entity to add.</param>
+        public void AddChild(Entity child)
+        {
+            child.transform.ParentOffset = transform.CalculateParentChildOffset(child.transform);
+            childrenIDs.Add(child.ID);
+        }
+
+        /// <summary>
+        /// Destroys the entity and its children.
+        /// </summary>
+        public void Destroy()
+        {
+            foreach (Entity child in GetChildren())
+            {
+                child.Destroy();
+            }
+            Engine.DestroyEntity(this);
         }
     }
 }
