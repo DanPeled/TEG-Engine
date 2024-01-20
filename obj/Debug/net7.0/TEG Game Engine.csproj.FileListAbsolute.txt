@@ -1,0 +1,14 @@
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\bin\Debug\net7.0\TEG Game Engine.exe
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\bin\Debug\net7.0\TEG Game Engine.deps.json
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\bin\Debug\net7.0\TEG Game Engine.runtimeconfig.json
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\bin\Debug\net7.0\TEG Game Engine.dll
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\bin\Debug\net7.0\TEG Game Engine.pdb
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.AssemblyInfoInputs.cache
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.AssemblyInfo.cs
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.csproj.CoreCompileInputs.cache
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.dll
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\refint\TEG Game Engine.dll
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.pdb
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\TEG Game Engine.genruntimeconfig.cache
+C:\Users\danpe\Desktop\Coding\Personal\C++\TEG Game Engine\obj\Debug\net7.0\ref\TEG Game Engine.dll
