@@ -29,8 +29,8 @@ or
 > <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span> </br>
 
 Sample main code:
-![Main.cs]()
-![MainGame.cs]()
+![Main.cs](https://raw.githubusercontent.com/DanPeled/TEG-Engine/C%23-Version/Engine/Readme%20Files/MainCodeMain.cs.png)
+![MainGame.cs](https://raw.githubusercontent.com/DanPeled/TEG-Engine/C%23-Version/Engine/Readme%20Files/MainCodeMainGame.cs.png)
 ## Init
 The `Engine.Init(Game)` function starts up the engine, and calls the start function on the game class provided to it on the main file. </br></br>
 <u>Example Usage: </u>
