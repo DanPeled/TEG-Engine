@@ -11,26 +11,53 @@
 > <span style="font-weight: bold; color: white;">TEG Game Engine - A text based game engine made in C#</span>
 </div>
 
-# Getting Started: 
-
-**TEG engine is currently only *Windows* supported** </br>
-In order to make the project into an executable, run the compile.bat file, here's the cmd command:
-```bash
-compile.bat
-```
-or 
-```bash
-.\compile.bat
-```
-
 ---
 # Documentation :
 # Engine Class
 > <span style="font-weight: bold; color: white;">The `Engine` class takes care of the screen rendering and initializing the game & engine.</span> </br>
 
 Sample main code:
-![Main.cs](https://raw.githubusercontent.com/DanPeled/TEG-Engine/C%23-Version/Engine/Readme%20Files/MainCodeMain.cs.png)
-![MainGame.cs](https://raw.githubusercontent.com/DanPeled/TEG-Engine/C%23-Version/Engine/Readme%20Files/MainCodeMainGame.cs.png)
+```csharp
+using TEG.TEGEngine;
+
+namespace MainCode
+{
+    public class MainClass
+    {
+        static readonly MainGame game = new();
+
+        public static void Main(string[] args)
+        {
+            Engine.Init(game, ConsoleColor.Black);
+            Engine.UpdateLoop();
+        }
+    }
+}
+
+```
+```csharp
+using TEG;
+using TEG.Classes;
+using TEG.Classes.BasicComponents;
+using TEG.TEGEngine;
+namespace MainCode
+{
+    public class MainGame : Game
+    {
+        public override void Start()
+        {
+            
+        }
+        public override void Update()
+        {
+            Console.WriteLine("Test");
+        }
+        public override void OnStop()
+        {
+        }
+    }
+}
+```
 ## Init
 The `Engine.Init(Game)` function starts up the engine, and calls the start function on the game class provided to it on the main file. </br></br>
 <u>Example Usage: </u>
@@ -41,21 +68,22 @@ It doesn't have to be the `Game` class, can be any class that derives from the `
 
 ---
 ## Update Loop
-On the `Engine::UpdateLoop()` function, rendering of all of the object is being handled, mostly using the `Engine::PrintScreen()` function.
+On the `Engine.UpdateLoop()` function, rendering of all of the object is being handled, mostly using the `Engine.Tick()` function.
 
 ### Print Screen
-The `PrintScreen()` function handles rendering the screen and going through the following steps:
+The `Engine.Tick()` function handles rendering the screen and going through the following steps:
 - Clear the screen.
-- Go through the `Object::objects` refrence vector, and call the Render function on each one.
+- Render all the objects onto the screen using the `RenderObjects()` method.
+- Call the `Update()` method on the `game` refrence object.
+- Call the `UpdateLoop()` method on the `Input` class.
 
 ---
 ## Stop
-The `Engine::OnStop()` function handles stopping the engine, and goes through the following steps:
-- starts by calling the `Exit()` function on the game variable (that was passed in the [`Engine::Init(Game game_)`](https://github.com/DanPeled/TEG-Engine/tree/main#init) function).
+The `Engine.StopEngine()` function handles stopping the engine, and goes through the following steps:
+- starts by calling the `OnStop()` function on the game variable (that was passed in the `Engine.Init(Game)` function).
 - Clears the screen.
-- Prints out "Engine Stopped." for debug purposes.
-- Cleans up the Input class by calling the `Input::Cleanup()` function.
-
+- Prints out "Stopping Engine." for debug purposes.
+- Resets any changes made to the console settings.
 ---
 
 # [Object](https://github.com/DanPeled/TEG-Engine/blob/main/Engine/Classes/Object.h)

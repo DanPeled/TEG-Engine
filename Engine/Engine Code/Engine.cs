@@ -157,6 +157,7 @@ namespace TEG.TEGEngine
         /// </summary>
         public static void StopEngine()
         {
+            game.OnStop();
             RUNNING = false;
             Console.Clear();
             SetCursorPosition(new Vec2(0, 0));
