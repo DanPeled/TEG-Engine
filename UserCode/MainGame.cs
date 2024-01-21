@@ -10,6 +10,8 @@ namespace MainCode
         Entity? entity, entity2;
         public override void Start()
         {
+            Console.WriteLine(vec);
+            Console.WriteLine(-vec);
             entity = new(vec);
             entity.GetComponent<Renderer>().sprite = "------------\n|---test---|\n------------\n";
             entity.AddComponent<CustomComp>();
@@ -17,6 +19,7 @@ namespace MainCode
             entity2 = new(new Vec2(0, 6));
             entity2.GetComponent<Renderer>().sprite = "/////////\n/////////\n/////////\n/////////";
             Engine.Instantiate(entity2);
+            entity.AddChild(entity2);
         }
         public override void Update()
         {
