@@ -10,8 +10,6 @@ namespace MainCode
         Entity? entity, entity2;
         public override void Start()
         {
-            Console.WriteLine(vec);
-            Console.WriteLine(-vec);
             entity = new(vec);
             entity.GetComponent<Renderer>().sprite = "------------\n|---test---|\n------------\n";
             entity.AddComponent<CustomComp>();
@@ -27,7 +25,6 @@ namespace MainCode
         }
         public override void OnStop()
         {
-            throw new NotImplementedException();
         }
     }
 }

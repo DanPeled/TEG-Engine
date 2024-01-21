@@ -16,11 +16,6 @@ namespace TEG.TEGEngine
         #region Class Vars
 
         /// <summary>
-        /// Output buffer for logging.
-        /// </summary>
-        private static StringBuilder outputBuffer = new StringBuilder();
-
-        /// <summary>
         /// The current game associated with the engine.
         /// </summary>
         private static Game? game;

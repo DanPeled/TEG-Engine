@@ -57,16 +57,13 @@ namespace TEG.Classes
         /// </summary>
         /// <typeparam name="T">The type of the component to add.</typeparam>
         /// <returns>The newly added component.</returns>
-        public T? AddComponent<T>() where T : EntityComponent, new()
+        public T AddComponent<T>() where T : EntityComponent, new()
         {
             T comp = new();
-            if (comp != null)
-            {
-                // Add the component to the list
-                components.Add(comp);
-                comp.Attach(this);
-                comp.Start();
-            }
+            // Add the component to the list
+            components.Add(comp);
+            comp.Attach(this);
+            comp.Start();
             return comp;
         }
 
