@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using TEG.Classes;
 using TEG.Classes.BasicComponents;
@@ -43,7 +44,7 @@ namespace TEG.TEGEngine
         /// <summary>
         /// List of entity references.
         /// </summary>
-        private static List<Ref<Entity>> entities = new List<Ref<Entity>>();
+        private static List<Entity> entities = new List<Entity>();
 
         #endregion
 
@@ -58,7 +59,7 @@ namespace TEG.TEGEngine
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.BackgroundColor = bgColor;
-            entities = new List<Ref<Entity>>();
+            entities = new List<Entity>();
             Console.WriteLine("INITIALIZING ENGINE");
             game = game_;
             RUNNING = true;
@@ -117,9 +118,8 @@ namespace TEG.TEGEngine
         public static void RenderObjects()
         {
             if (entities.Count == 0) return;
-            foreach (Ref<Entity> reference in entities)
+            foreach (Entity entity in entities)
             {
-                Entity? entity = reference.Value ?? null;
                 if (entity != null && entity.Enabled)
                 {
                     Render(entity);
@@ -134,12 +134,13 @@ namespace TEG.TEGEngine
         /// <param name="entity">The entity to render.</param>
         public static void Render(Entity entity)
         {
-            if (entity == null || entity.GetComponent<Renderer>().sprite == null)
+            Renderer? renderer = entity.GetComponent<Renderer>();
+            if (entity == null || renderer == null || renderer.sprite == null)
             {
                 return;
             }
 
-            string[] lines = entity.GetComponent<Renderer>().sprite.Split("\n");
+            string[] lines = renderer.sprite.Split("\n") ?? new string[] { "" };
 
             int x = entity.transform.GlobalPosition.x;
             int y = entity.transform.GlobalPosition.y;
@@ -147,7 +148,9 @@ namespace TEG.TEGEngine
             foreach (string line in lines)
             {
                 Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = renderer.color ?? ConsoleColor.White;
                 Console.Write(line);
+                Console.ResetColor();
                 y++;
             }
         }
@@ -157,7 +160,7 @@ namespace TEG.TEGEngine
         /// </summary>
         public static void StopEngine()
         {
-            game.OnStop();
+            game?.OnStop();
             RUNNING = false;
             Console.Clear();
             SetCursorPosition(new Vec2(0, 0));
@@ -198,8 +201,15 @@ namespace TEG.TEGEngine
         /// <param name="entity">The entity to instantiate.</param>
         public static void Instantiate(Entity entity)
         {
-            entities.Add(new Ref<Entity> { Value = entity });
+            PropertyInfo idProperty = entity.GetType().GetProperty("ID");
+            if (idProperty != null)
+            {
+                idProperty.SetValue(entity, ObtainID(entity));
+            }
+
+            entities.Add(entity);
         }
+
 
         /// <summary>
         /// Removes an entity from the engine.
@@ -207,10 +217,10 @@ namespace TEG.TEGEngine
         /// <param name="e">The entity to remove.</param>
         public static void RemoveEntity(Entity e)
         {
-            Ref<Entity>? entityRef = entities.FirstOrDefault(r => (r?.Value) == e);
-            if (entityRef != null)
+            Entity entity = entities.FirstOrDefault(r => r == e);
+            if (entity != null)
             {
-                entities.Remove(entityRef);
+                entities.Remove(entity);
             }
         }
 
@@ -219,21 +229,51 @@ namespace TEG.TEGEngine
         /// </summary>
         /// <param name="e">The entity.</param>
         /// <returns>The ID of the entity.</returns>
+        /// <summary>
+        /// Obtains the ID of an entity.
+        /// </summary>
+        /// <param name="e">The entity.</param>
+        /// <returns>The ID of the entity.</returns>
         public static uint ObtainID(Entity e)
         {
-            if (e != null && entities.FirstOrDefault(r => r.Value == e) != null) return e.ID;
-            return (uint)entities.Count;
+            if (e != null)
+            {
+                // Check if the entity is already assigned an ID
+                if (e.ID != 0)
+                {
+                    return e.ID;
+                }
+                else
+                {
+                    // Assign a new ID based on the current count
+                    uint newID = (uint)entities.Count;
+                    return newID;
+                }
+            }
+
+            // Return 0 for cases where the entity is null
+            return 0;
         }
+
 
         /// <summary>
         /// Retrieves an entity with a specific ID.
         /// </summary>
         /// <param name="id">The ID of the entity to retrieve.</param>
-        /// <returns>The entity with the specified ID.</returns>
-        public static Ref<Entity>? GetEntityWithID(uint id)
+        /// <returns>The entity with the specified ID, or null if not found.</returns>
+        public static Entity? GetEntityWithID(uint id)
         {
-            return entities.FirstOrDefault(r => r.Value?.ID == id) ?? null;
+            Entity[] matchingEntities = entities.Where(r => r.ID == id).ToArray();
+
+            if (matchingEntities.Length > 0)
+            {
+                return matchingEntities[0];
+            }
+
+            // Return null if no matching entity is found.
+            return null;
         }
+
 
         /// <summary>
         /// Destroys an entity by its ID.
@@ -251,6 +291,24 @@ namespace TEG.TEGEngine
         public static void DestroyEntity(Entity entity)
         {
             DestroyEntity(entity.ID);
+        }
+
+        /// <summary>
+        /// Retrives all the entities with the provided tag
+        /// </summary>
+        /// <param name="tag">The tag to search for</param>
+        /// <returns>An array of the entities with the matching tag</returns>
+        public static Entity[] GetEntitiesWithTag(string tag)
+        {
+            var matchingEntities = entities?.Where(r => r != null && string.Equals(r.tag, tag, StringComparison.OrdinalIgnoreCase));
+
+            if (matchingEntities != null && matchingEntities.Any())
+            {
+                return matchingEntities.ToArray();
+            }
+
+            // Handle case where no entities with the specified tag are found.
+            return new Entity[0];
         }
 
         #endregion

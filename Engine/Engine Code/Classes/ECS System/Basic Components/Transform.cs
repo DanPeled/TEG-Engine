@@ -4,11 +4,11 @@ namespace TEG.Classes.BasicComponents
     {
         private Vec2? globalPosition;
         public Vec2 ParentOffset { get; set; } = new(0, 0);
-        public Vec2? GlobalPosition
+        public Vec2 GlobalPosition
         {
             get
             {
-                return globalPosition;
+                return globalPosition ?? new Vec2(0, 0);
             }
             set
             {

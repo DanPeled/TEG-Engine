@@ -123,7 +123,7 @@ The `AddChild(Entity child)` function takes in a refrence to the child you want 
 ```
 
 #### Position-Relation
-Every time you will set the `GlobalPosition` attribute on a entity, it will trigger the function also for all its children, and make them move aswell, according to their initial offset from their parent.
+Every time you will set the `GlobalPosition` attribute on an entity's transform, it will trigger the function also for all its children, and make them move aswell, according to their initial offset from their parent.
 
 #### Getting Amount Of Children
 It is possible to get the amount of children of an `Entity` instance using the `GetChildCount()` function, like in the following code snippet: 
@@ -188,5 +188,9 @@ The `Component` class is a abstract class that is derived to make entity compone
 ## Basic Components
 ---
 
+### Transform
+The transform component holds data for represeting the entity's position in the world, and has 1 public function : the `CalculateParentChildOffset' function, which returns the offset between a parent and a child.
 
+### Renderer
+The renderer component holds data for representing the visuals of the entity, its shape and color.
 </span>

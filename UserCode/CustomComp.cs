@@ -22,9 +22,21 @@ namespace MainCode
             {
                 entity.transform.GlobalPosition += new Vec2(1, 0);
             }
+            else if (Input.IsKeyPressed(ConsoleKey.A))
+            {
+                entity.transform.GlobalPosition -= new Vec2(1, 0);
+            }
+            else if (Input.IsKeyPressed(ConsoleKey.S))
+            {
+                entity.transform.GlobalPosition += new Vec2(0, 1);
+            }
+            else if (Input.IsKeyPressed(ConsoleKey.W))
+            {
+                entity.transform.GlobalPosition -= new Vec2(0, 1);
+            }
             else if (Input.IsKeyPressed(ConsoleKey.Q))
             {
-                Engine.StopEngine();
+                Engine.GetEntitiesWithTag("test")[0].transform.GlobalPosition -= new Vec2(0, 1);
             }
         }
     }

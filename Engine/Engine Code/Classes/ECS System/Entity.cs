@@ -15,6 +15,7 @@ namespace TEG.Classes
         private List<EntityComponent> components;
         private List<uint> childrenIDs;
         public Transform transform { get; private set; }
+        public string tag;
 
         /// <summary>
         /// Gets or sets the unique identifier of the entity.
@@ -46,7 +47,6 @@ namespace TEG.Classes
             // Initialize components list
             components = new List<EntityComponent>();
             childrenIDs = new List<uint>();
-            ID = Engine.ObtainID(this);
             transform = AddComponent<Transform>();
             transform.GlobalPosition = initialPos;
             AddComponent<Renderer>();
@@ -118,7 +118,7 @@ namespace TEG.Classes
             List<Entity> children = new List<Entity>();
             foreach (uint ID in childrenIDs)
             {
-                children.Add(Engine.GetEntityWithID(ID)?.Value ?? new Entity(new Vec2(0, 0)));
+                children.Add(Engine.GetEntityWithID(ID) ?? new Entity(new Vec2(0, 0)));
             }
             return children.ToArray();
         }
@@ -152,6 +152,17 @@ namespace TEG.Classes
                 child.Destroy();
             }
             Engine.DestroyEntity(this);
+        }
+
+        /// <summary>
+        /// Checks wheter an object is obscured by an another
+        /// </summary>
+        /// <param name="other">The object which might obscure</param>
+        /// <returns>Wheter the object is obscured or not</returns>
+        public bool IsObscuredBy(Entity other)
+        {
+            // TODO: MAKE LOGIC
+            return other.ID > ID;
         }
     }
 }
